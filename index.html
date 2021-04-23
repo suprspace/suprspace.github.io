@@ -66,48 +66,44 @@
     #uppad {
         position: absolute;
         top: 80%;
-        left: 80%;
+        left: 75%;
         width: 20px;
         height: 20px;
-        border-top: 5px solid #fff;
-        border-left: 5px solid #fff;
-        border-radius: 2px;
+        background: #fff;
+        border-radius: 3px;
         transform: rotate(45deg);
         margin-top: -25px;
     }
     #dnpad {
         position: absolute;
         top: 80%;
-        left: 80%;
+        left: 75%;
         width: 20px;
         height: 20px;
-        border-top: 5px solid #fff;
-        border-left: 5px solid #fff;
-        border-radius: 2px;
+        background: #fff;
+        border-radius: 3px;
         transform: rotate(225deg);
         margin-top: 25px;
     }
     #lpad {
         position: absolute;
         top: 80%;
-        left: 80%;
+        left: 75%;
         width: 20px;
         height: 20px;
-        border-top: 5px solid #fff;
-        border-left: 5px solid #fff;
-        border-radius: 2px;
+        background: #fff;
+        border-radius: 3px;
         transform: rotate(-45deg);
         margin-left: -25px;
     }
     #rpad {
         position: absolute;
         top: 80%;
-        left: 80%;
+        left: 75%;
         width: 20px;
         height: 20px;
-        border-top: 5px solid #fff;
-        border-left: 5px solid #fff;
-        border-radius: 2px;
+        background: #fff;
+        border-radius: 3px;
         transform: rotate(135deg);
         margin-left: 25px;
     }
@@ -124,7 +120,7 @@
         mix-blend-mode: difference;
         opacity: 25%;
         top: 80%;
-        left: 80%;
+        left: 75%;
         transform: translate(-50%,-50%) rotate(45deg);
         margin-left: 10px;
         margin-top: 10px;
@@ -132,6 +128,14 @@
     .dpad:hover {
         border: 5px solid #fff;
         transition: .3s;
+    }
+    #mobiledisable {
+        display: none;
+    }
+    @media only screen and (max-width: 800px) {
+        #mobiledisable {
+            display: block;
+        }
     }
 </style>
     
@@ -144,9 +148,8 @@
     
     <div class="box" id="box"></div>
     
-
+<div id="mobiledisable">
     <div class="dpad"></div>
-    
     
 <button id="uppad" ontouchstart="start1()" ontouchend="end1()"></button>
 <button id="dnpad" ontouchstart="start2()" ontouchend="end2()"></button>
@@ -154,6 +157,7 @@
 <button id="rpad" ontouchstart="start4()" ontouchend="end4()"></button>
     
 <p id="counter" style="color: transparent;"></p>
+    </div>
     
 </body>
     
