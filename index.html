@@ -8,8 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content= "ie=edge">
     <title>UN 1.0</title>
-
-    <script src="/src/nipple.js"></script>
     
     <script
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
@@ -125,10 +123,6 @@
         margin-left: 10px;
         margin-top: 10px;
     }
-    .dpad:hover {
-        border: 5px solid #fff;
-        transition: .3s;
-    }
     #mobiledisable {
         display: none;
     }
@@ -136,6 +130,12 @@
         #mobiledisable {
             display: block;
         }
+    }
+    #collide {
+        position: fixed;
+        width: 50px;
+        height: 50px;
+        background: red;
     }
 </style>
     
@@ -145,6 +145,9 @@
     <div class="circle" id="circle"></div>
     </div>
     
+    <div style="position:fixed;top: 20%; left: 50%;">
+    <div id="collide"></div>
+    </div>
     
     <div class="box" id="box"></div>
     
@@ -153,29 +156,57 @@
     
 <button id="uppad" ontouchstart="start1()" ontouchend="end1()"></button>
 <button id="dnpad" ontouchstart="start2()" ontouchend="end2()"></button>
-<button id="lpad" ontouchstart="start3()" onmtouchend="end3()"></button>
+<button id="lpad" ontouchstart="start3()" ontouchend="end3()"></button>
 <button id="rpad" ontouchstart="start4()" ontouchend="end4()"></button>
     
 <p id="counter" style="color: transparent;"></p>
     </div>
     
+    
+    <p id="compass"></p>
+<!--
+3=up 4=down 1=left 2=right
+-->
+    
 </body>
     
-    
-<script>
-    var manager = nipplejs.create(options);
-    
-        var dynamic = nipplejs.create({
-        zone: document.getElementById('dynamic'),
-        color: 'red'
-    });
-    
-</script>
     
 <script>
     
     var circle = document.getElementById("circle");
     var box = document.getElementById("box");
+    
+    var collide = document.getElementById("collide");
+    
+      function collision2($circle, $collide) {
+      var x_1 = $circle.offset().left;
+      var y_1 = $circle.offset().top;
+      var h_1 = $circle.outerHeight(true);
+      var w_1 = $circle.outerWidth(true);
+      var b_1 = y_1 + h_1;
+      var r_1 = x_1 + w_1;
+      var x_2 = $collide.offset().left;
+      var y_2 = $collide.offset().top;
+      var h_2 = $collide.outerHeight(true);
+      var w_2 = $collide.outerWidth(true);
+      var b_2 = y_2 + h_2;
+      var r_2 = x_2 + w_2;
+          
+    
+      if (b_1 < y_2 || y_1 > b_2 || r_1 < x_2 || x_1 > r_2) {
+          return;
+        } else {
+            return moveBy = -20,
+                setTimeout(function(){moveBy=0},100),
+                setTimeout(function(){moveBy=10},500);
+        }
+}
+    
+    
+    window.setInterval(function() {
+    $('#result').text(collision2($('#circle'), $('#collide')));
+}, 200);
+    
         
       function collision($circle, $box) {
       var x1 = $circle.offset().left;
@@ -225,28 +256,17 @@
       }
     }
 
-      //if ((b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) && (y1 < 50)) {
-          //return document.getElementById("box").style.background="green";
-      //} else if ((b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) && (x1 < 50)) {
-          //return document.getElementById("box").style.background="pink";
-      //} else if ((b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) && (y2 < y1)) {
-          //return document.getElementById("box").style.background="red";
-      //} else if ((b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) && (x1 < c1)) {
-          //return document.getElementById("box").style.background="orange";
-      //} else {
-          //return document.getElementById("box").style.background="blue";
-      //}
-    //}x
-          
-      //if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return //document.getElementById("box").style.background="red";
-          //return document.getElementById("box").style.background="blue";
-    //}x
     
     window.setInterval(function() {
     $('#result').text(collision($('#circle'), $('#box')));
 }, 200);
+
+    
     
     let moveBy = 10;
+    
+    var wrap = document.getElementById('compass');
+    var compass = 0;
     
     window.addEventListener('load', () => {
         circle.style.position = 'absolute';
@@ -258,15 +278,23 @@
         switch(e.key) {
             case 'ArrowLeft':
                 circle.style.left = parseInt(circle.style.left) - moveBy + 'px';
+                wrap.innerHTML = compass;
+                compass = 1;
                 break;
             case 'ArrowRight':
                 circle.style.left = parseInt(circle.style.left) + moveBy + 'px';
+                wrap.innerHTML = compass;
+                compass = 2;
                 break;
             case 'ArrowUp':
                 circle.style.top = parseInt(circle.style.top) - moveBy + 'px';
+                wrap.innerHTML = compass;
+                compass = 3;
                 break;
             case 'ArrowDown':
                 circle.style.top = parseInt(circle.style.top) + moveBy + 'px';
+                wrap.innerHTML = compass;
+                compass =4;
                 break;
         }
     });
