@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content= "ie=edge">
     <title>UN 1.0</title>
+
+    <script src="/src/nipple.js"></script>
     
     <script
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
@@ -38,6 +40,9 @@
         background: blueviolet;
         border-radius: 50%;
     }
+    .circle.move {
+        transition: 2s;
+    }
     #box {
         position: absolute;
         width: 90%;
@@ -49,6 +54,76 @@
         position: fixed;
         opacity: 50%;
     }
+    #uppad {
+        position: absolute;
+        top: 80%;
+        left: 80%;
+        width: 20px;
+        height: 20px;
+        border-top: 5px solid #fff;
+        border-left: 5px solid #fff;
+        border-radius: 2px;
+        transform: rotate(45deg);
+        margin-top: -25px;
+    }
+    #dnpad {
+        position: absolute;
+        top: 80%;
+        left: 80%;
+        width: 20px;
+        height: 20px;
+        border-top: 5px solid #fff;
+        border-left: 5px solid #fff;
+        border-radius: 2px;
+        transform: rotate(225deg);
+        margin-top: 25px;
+    }
+    #lpad {
+        position: absolute;
+        top: 80%;
+        left: 80%;
+        width: 20px;
+        height: 20px;
+        border-top: 5px solid #fff;
+        border-left: 5px solid #fff;
+        border-radius: 2px;
+        transform: rotate(-45deg);
+        margin-left: -25px;
+    }
+    #rpad {
+        position: absolute;
+        top: 80%;
+        left: 80%;
+        width: 20px;
+        height: 20px;
+        border-top: 5px solid #fff;
+        border-left: 5px solid #fff;
+        border-radius: 2px;
+        transform: rotate(135deg);
+        margin-left: 25px;
+    }
+    button {
+        background: none;
+        border: none;
+    }
+    .dpad {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        background-color: darkgrey;
+        border: 1px solid #fff;
+        mix-blend-mode: difference;
+        opacity: 25%;
+        top: 80%;
+        left: 80%;
+        transform: translate(-50%,-50%) rotate(45deg);
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+    .dpad:hover {
+        border: 5px solid #fff;
+        transition: .3s;
+    }
 </style>
     
 <body>
@@ -59,9 +134,30 @@
     
     
     <div class="box" id="box"></div>
+    
 
+    <div class="dpad"></div>
+    
+    
+<button id="uppad" onmousedown="start1()" onmouseup="end1()"></button>
+<button id="dnpad" onmousedown="start2()" onmouseup="end2()"></button>
+<button id="lpad" onmousedown="start3()" onmouseup="end3()"></button>
+<button id="rpad" onmousedown="start4()" onmouseup="end4()"></button>
+    
+<p id="counter" style="color: transparent;"></p>
     
 </body>
+    
+    
+<script>
+    var manager = nipplejs.create(options);
+    
+        var dynamic = nipplejs.create({
+        zone: document.getElementById('dynamic'),
+        color: 'red'
+    });
+    
+</script>
     
 <script>
     
@@ -82,21 +178,37 @@
       var b2 = y2 + h2;
       var r2 = x2 + w2;
           
-      var t1 = $circle.offset().bottom;
-      var g1 = $circle.offset().right;
-          
-      var c1 = $box.offset().bottom;
           
       if (b1 < y2) {
-          return document.getElementById("box").style.background="green";
+          return document.getElementById("box").style.background="green",//top
+          document.getElementById("circle").style.top="0",
+          document.getElementById("circle").classList.add('move'),
+          moveBy = 0,
+          setTimeout(function(){moveBy = 10},2000),
+          setTimeout(function(){document.getElementById("circle").classList.remove('move')},2000);
       } else if (y1 > b2) {
-          return document.getElementById("box").style.background="pink";
+          return document.getElementById("box").style.background="pink",//down
+          document.getElementById("circle").style.top="0",
+          document.getElementById("circle").classList.add('move'),
+          moveBy = 0,
+          setTimeout(function(){moveBy = 10},2000),
+          setTimeout(function(){document.getElementById("circle").classList.remove('move')},2000);
       } else if (r1 < x2) {
-          return document.getElementById("box").style.background="red";
+          return document.getElementById("box").style.background="red",//left
+          document.getElementById("circle").style.left="0",
+          document.getElementById("circle").classList.add('move'),
+          moveBy = 0,
+          setTimeout(function(){moveBy = 10},2000),
+          setTimeout(function(){document.getElementById("circle").classList.remove('move')},2000);
       } else if (x1 > r2) {
-          return document.getElementById("box").style.background="orange";
+          return document.getElementById("box").style.background="orange",//right
+          document.getElementById("circle").style.left="0",
+          document.getElementById("circle").classList.add('move'),
+          moveBy = 0,
+          setTimeout(function(){moveBy = 10},2000),
+          setTimeout(function(){document.getElementById("circle").classList.remove('move')},2000);
       } else {
-          return document.getElementById("box").style.background="blue";
+          return document.getElementById("box").style.background="blue";//none
       }
     }
 
@@ -145,6 +257,55 @@
                 break;
         }
     });
+    
+  var wrapper = document.getElementById('counter');
+  var counter;
+  var count = 0;
+  
+  function start1() {
+    counter = setInterval(function() {
+      wrapper.innerHTML = count;
+      circle.style.top = parseInt(circle.style.top) - moveBy + 'px';
+      count++;
+    }, 50);
+  }
+  function end1() {
+    clearInterval(counter)
+  }
+    
+    
+      function start2() {
+    counter = setInterval(function() {
+      wrapper.innerHTML = count;
+      circle.style.top = parseInt(circle.style.top) + moveBy + 'px';
+      count++;
+    }, 50);
+  }
+  function end2() {
+    clearInterval(counter)
+  }
+    
+      function start3() {
+    counter = setInterval(function() {
+      wrapper.innerHTML = count;
+      circle.style.left = parseInt(circle.style.left) - moveBy + 'px';
+      count++;
+    }, 50);
+  }
+  function end3() {
+    clearInterval(counter)
+  }
+    
+      function start4() {
+    counter = setInterval(function() {
+      wrapper.innerHTML = count;
+      circle.style.left = parseInt(circle.style.left) + moveBy + 'px';
+      count++;
+    }, 50);
+  }
+  function end4() {
+    clearInterval(counter)
+  }
     
 </script>
 
