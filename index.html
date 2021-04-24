@@ -42,13 +42,14 @@
         transform: translate(-50%,-50%);
     }
     #circle {
-        height: 100px;
-        width: 100px;
+        position: fixed;
+        height: 50px;
+        width: 50px;
         background: blueviolet;
         border-radius: 50%;
     }
     .circle.move {
-        transition: 2s;
+        transition: 1s;
     }
     #box {
         position: absolute;
@@ -65,45 +66,53 @@
         position: absolute;
         top: 80%;
         left: 75%;
-        width: 20px;
-        height: 20px;
-        background: #fff;
+        width: 35px;
+        height: 35px;
+        background: transparent;
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 10px #fff;
         border-radius: 3px;
         transform: rotate(45deg);
-        margin-top: -25px;
+        margin-top: -30px;
     }
     #dnpad {
         position: absolute;
         top: 80%;
         left: 75%;
-        width: 20px;
-        height: 20px;
-        background: #fff;
+        width: 35px;
+        height: 35px;
+        background: transparent;
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 10px #fff;
         border-radius: 3px;
         transform: rotate(225deg);
-        margin-top: 25px;
+        margin-top: 30px;
     }
     #lpad {
         position: absolute;
         top: 80%;
         left: 75%;
-        width: 20px;
-        height: 20px;
-        background: #fff;
+        width: 35px;
+        height: 35px;
+        background: transparent;
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 10px #fff;
         border-radius: 3px;
         transform: rotate(-45deg);
-        margin-left: -25px;
+        margin-left: -30px;
     }
     #rpad {
         position: absolute;
         top: 80%;
         left: 75%;
-        width: 20px;
-        height: 20px;
-        background: #fff;
+        width: 35px;
+        height: 35px;
+        background: transparent;
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 10px #fff;
         border-radius: 3px;
         transform: rotate(135deg);
-        margin-left: 25px;
+        margin-left: 30px;
     }
     button {
         background: none;
@@ -111,8 +120,8 @@
     }
     .dpad {
         position: fixed;
-        width: 100px;
-        height: 100px;
+        width: 0;
+        height: 0;
         background-color: darkgrey;
         border: 1px solid #fff;
         mix-blend-mode: difference;
@@ -132,10 +141,24 @@
         }
     }
     #collide {
-        position: fixed;
+        position: relative;
         width: 50px;
-        height: 50px;
-        background: red;
+        height: 500px;
+        margin-top: -500px;
+        background: linear-gradient(#000, red, yellow);
+    }
+    #camera {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border: 1px solid blue;
+    }
+    .camera.move {
+        transition: 1s;
     }
 </style>
     
@@ -145,8 +168,10 @@
     <div class="circle" id="circle"></div>
     </div>
     
-    <div style="position:fixed;top: 20%; left: 50%;">
-    <div id="collide"></div>
+    <div id="camera" class="camera">
+        
+
+    <div id="collide" style="top: 20%; left: 50%;"></div>
     </div>
     
     <div class="box" id="box"></div>
@@ -164,6 +189,10 @@
     
     
     <p id="compass"></p>
+    <p id="gridtop"></p>
+    <p id="gridbottom"></p>
+    <p id="gridleft"></p>
+    <p id="gridright"></p>
 <!--
 3=up 4=down 1=left 2=right
 -->
@@ -175,6 +204,8 @@
     
     var circle = document.getElementById("circle");
     var box = document.getElementById("box");
+    
+    var camera = document.getElementById("camera");
     
     var collide = document.getElementById("collide");
     
@@ -208,7 +239,7 @@
 }, 200);
     
         
-      function collision($circle, $box) {
+      function collision($circle, $box, $camera) {
       var x1 = $circle.offset().left;
       var y1 = $circle.offset().top;
       var h1 = $circle.outerHeight(true);
@@ -222,51 +253,89 @@
       var b2 = y2 + h2;
       var r2 = x2 + w2;
           
+      var one = 1;
+        
+          
           
       if (b1 < y2) {
           return document.getElementById("box").style.background="green",//top
+          gridtop = gridtop + 1,
+          gtop.innerHTML = gridtop,
           document.getElementById("circle").style.top="0",
+          document.getElementById("camera").style.top= gridtop + '00%',
           document.getElementById("circle").classList.add('move'),
+          document.getElementById("camera").classList.add('move'),
           moveBy = 0,
-          setTimeout(function(){moveBy = 10},2000),
-          setTimeout(function(){document.getElementById("circle").classList.remove('move')},2000);
+          setTimeout(function(){moveBy = 15},1000),
+          setTimeout(function(){document.getElementById("camera").classList.remove('move')},1000),
+          setTimeout(function(){document.getElementById("circle").classList.remove('move')},1000);
       } else if (y1 > b2) {
           return document.getElementById("box").style.background="pink",//down
+          gridtop = gridtop - 1,
+          gtop.innerHTML = gridtop,
           document.getElementById("circle").style.top="0",
+          document.getElementById("camera").style.top= + gridtop + '00%',
           document.getElementById("circle").classList.add('move'),
+          document.getElementById("camera").classList.add('move'),
           moveBy = 0,
-          setTimeout(function(){moveBy = 10},2000),
-          setTimeout(function(){document.getElementById("circle").classList.remove('move')},2000);
+          setTimeout(function(){moveBy = 15},1000),
+          setTimeout(function(){document.getElementById("camera").classList.remove('move')},1000),
+          setTimeout(function(){document.getElementById("circle").classList.remove('move')},1000);
       } else if (r1 < x2) {
           return document.getElementById("box").style.background="red",//left
+          gridleft = gridleft + 1,
+          gleft.innerHTML = gridleft,
           document.getElementById("circle").style.left="0",
+          document.getElementById("camera").style.left= gridleft + '00%',
           document.getElementById("circle").classList.add('move'),
+          document.getElementById("camera").classList.add('move'),
           moveBy = 0,
-          setTimeout(function(){moveBy = 10},2000),
-          setTimeout(function(){document.getElementById("circle").classList.remove('move')},2000);
+          setTimeout(function(){moveBy = 15},1000),
+          setTimeout(function(){document.getElementById("camera").classList.remove('move')},1000),
+          setTimeout(function(){document.getElementById("circle").classList.remove('move')},1000);
       } else if (x1 > r2) {
           return document.getElementById("box").style.background="orange",//right
+          gridleft = gridleft - 1,
+          gleft.innerHTML = gridleft,
           document.getElementById("circle").style.left="0",
+          document.getElementById("camera").style.left= gridleft + '00%',
           document.getElementById("circle").classList.add('move'),
+          document.getElementById("camera").classList.add('move'),
           moveBy = 0,
-          setTimeout(function(){moveBy = 10},2000),
-          setTimeout(function(){document.getElementById("circle").classList.remove('move')},2000);
+          setTimeout(function(){moveBy = 15},1000),
+          setTimeout(function(){document.getElementById("camera").classList.remove('move')},1000),
+          setTimeout(function(){document.getElementById("circle").classList.remove('move')},1000);
       } else {
           return document.getElementById("box").style.background="blue";//none
       }
     }
 
     
+    
     window.setInterval(function() {
-    $('#result').text(collision($('#circle'), $('#box')));
+    $('#result').text(collision($('#circle'), $('#box'), $('#camera')));
+        direct.innerHTML = gridtop;
 }, 200);
+    
+    
 
     
-    
-    let moveBy = 10;
+    let moveBy = 15;
     
     var wrap = document.getElementById('compass');
     var compass = 0;
+    
+    var gtop = document.getElementById('gridtop');
+    var gridtop = 0;
+    
+    var gbottom = document.getElementById('gridbottom');
+    var gridbottom = 0;
+    
+    var gleft = document.getElementById('gridleft');
+    var gridleft = 0;
+    
+    var gright = document.getElementById('gridright');
+    var gridright = 0;
     
     window.addEventListener('load', () => {
         circle.style.position = 'absolute';
@@ -308,7 +377,7 @@
       wrapper.innerHTML = count;
       circle.style.top = parseInt(circle.style.top) - moveBy + 'px';
       count++;
-    }, 50);
+    }, 5);
   }
   function end1() {
     clearInterval(counter)
@@ -320,7 +389,7 @@
       wrapper.innerHTML = count;
       circle.style.top = parseInt(circle.style.top) + moveBy + 'px';
       count++;
-    }, 50);
+    }, 5);
   }
   function end2() {
     clearInterval(counter)
@@ -331,7 +400,7 @@
       wrapper.innerHTML = count;
       circle.style.left = parseInt(circle.style.left) - moveBy + 'px';
       count++;
-    }, 50);
+    }, 5);
   }
   function end3() {
     clearInterval(counter)
@@ -342,7 +411,7 @@
       wrapper.innerHTML = count;
       circle.style.left = parseInt(circle.style.left) + moveBy + 'px';
       count++;
-    }, 50);
+    }, 5);
   }
   function end4() {
     clearInterval(counter)
