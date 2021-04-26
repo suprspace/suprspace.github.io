@@ -30,11 +30,6 @@
             --pixel-size: 3px;
         }
     }
-    @media (max-width: 600px) {
-        :root {
-            --pixel-size: 2px;
-        }
-    }
     .pixel-art {
         image-rendering: pixelated;
     }
@@ -73,8 +68,8 @@
         position: relative;
     }
     .icon {
-        width: calc(var(--grid-cell)*2);
-        height: calc(var(--grid-cell)*2);
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
         background-image: url("astro.png");
         background-size: 100%;
         position: absolute;
@@ -186,8 +181,8 @@
         icon.setAttribute("walking", held_direction ? "true" : "false");
         
         
-        var camera_left = pixelSize * 65;
-        var camera_top = pixelSize * 65;
+        var camera_left = pixelSize * 72;
+        var camera_top = pixelSize * 72;
         
         map.style.transform = `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         
