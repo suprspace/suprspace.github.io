@@ -86,8 +86,8 @@ function removeLoader(){
         image-rendering: pixelated;
         background-image: url("/grass.png");
         background-size: 100%;
-        width: calc(4*var(--grid-cell));
-        height: calc(4*var(--grid-cell));
+        width: calc(2*var(--grid-cell));
+        height: calc(2*var(--grid-cell));
     }
     #loadingDiv {
         position: fixed;
@@ -131,8 +131,8 @@ function removeLoader(){
     #circle {
         z-index: 9;
         position: absolute;
-        height: calc(var(--grid-cell)*1);
-        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*.5);
+        width: calc(var(--grid-cell)*.5);
         background-image: url("astro.png");
         image-rendering: pixelated;
         background-size: 100%;
@@ -223,8 +223,8 @@ function removeLoader(){
     }
     #collide {
         position: absolute;
-        width: calc(var(--grid-cell)*1);
-        height: calc(var(--grid-cell)*1);
+        width: calc(var(--grid-cell)*.25);
+        height: calc(var(--grid-cell)*.25);
         background: linear-gradient(#000, red, yellow);
     }
     #camera {
@@ -243,20 +243,21 @@ function removeLoader(){
     .daynightcycle {
     position: fixed;
         pointer-events: none;
-    width: auto;
-    height: auto;
+    width: calc(var(--grid-cell)*4);
+    height: calc(var(--grid-cell)*4);
     z-index: 10;
+        margin: auto;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
-        opacity: 50%;
+        opacity: 70%;
     background: linear-gradient(180deg, #c0d3ff, #bdebff, #ffe68b, #ffbd00, #ff9000, #ff3600, #bc5ee1, #7c5ee1, #2b0089, #006fb4, #00ab75, #1100ba, #7d00ff, #080051);
     background-size: 2800% 2800%;
 
-    -webkit-animation: AnimationName 120s ease infinite;
-    -moz-animation: AnimationName 120s ease infinite;
-    animation: AnimationName 120s ease infinite;
+    -webkit-animation: AnimationName 20s ease infinite;
+    -moz-animation: AnimationName 20s ease infinite;
+    animation: AnimationName 20s ease infinite;
 }
 
 @-webkit-keyframes AnimationName {
@@ -284,9 +285,6 @@ function removeLoader(){
     <div id="loadingDiv"></div>
 
     
-    <div class="daynightcycle" style="mix-blend-mode: color-burn; opacity: 10%;"></div>
-    <div class="daynightcycle" style="mix-blend-mode: multiply; opacity: 20%;"></div>
-    <div class="daynightcycle" style="mix-blend-mode: soft-light;"></div>
     
 
     <div class="holder">
@@ -301,7 +299,8 @@ function removeLoader(){
 
     <div class="map"></div>
 
-
+<div class="daynightcycle" style="mix-blend-mode: soft-light;"></div>
+        
     <div id="collide" style="top: calc(var(--grid-cell)*1); left: calc(var(--grid-cell)*3);"></div>
     </div>
     
