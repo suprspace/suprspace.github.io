@@ -56,15 +56,23 @@ function removeLoader(){
             --pixel-size: 5px;
         }
     }
+    .backdrop {
+        background-color: #000;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: auto;
+        height: auto;
+        position: fixed;
+    }
     html {
         max-width: 100%;
         max-height: 100%;
         overflow: hidden;
-        background-color: #000;
         color: #fff;
     }
     body {
-        background-color: #000;
         touch-action: manipulation;
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -271,6 +279,7 @@ function removeLoader(){
     
 <body>
     
+    <div class="backdrop"></div>
     
     <div id="loadingDiv"></div>
 
