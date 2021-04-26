@@ -36,7 +36,9 @@ function removeLoader(){
       $( "#loadingDiv" ).remove();
   });  
 }
+    
 </script>
+
 
 <style>
     :root {
@@ -46,7 +48,7 @@ function removeLoader(){
     }
     @media(max-width: 900px) {
         :root {
-            --pixel-size: 7px;
+            --pixel-size: 7.5px;
         }
     }
     @media(max-width: 700px) {
@@ -55,7 +57,11 @@ function removeLoader(){
         }
     }
     html {
+        max-width: 100%;
+        max-height: 100%;
         overflow: hidden;
+        background: #000;
+        color: #fff;
     }
     body {
         touch-action: manipulation;
@@ -67,15 +73,12 @@ function removeLoader(){
             user-select: none;
     }
     .map {
+        position: absolute;
         image-rendering: pixelated;
         background-image: url("/grass.png");
         background-size: 100%;
-        position: fixed;
         width: calc(4*var(--grid-cell));
         height: calc(4*var(--grid-cell));
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
     }
     #loadingDiv {
         position: fixed;
@@ -92,18 +95,33 @@ function removeLoader(){
     .loader:after {
         
     }
+    .holder {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(5*var(--grid-cell));
+        width: calc(5*var(--grid-cell));
+        border: 1px solid #fff;
+        border-radius: calc(.2*var(--grid-cell));
+        top: 5%;
+        left: 50%;
+        transform: translate(-50%);
+    }
     .container {
-        position: fixed;
+        position: absolute;
         z-index: 9;
         border: 1px solid lightgrey;
         height: calc(var(--grid-cell)*1);
         width: calc(var(--grid-cell)*1);
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
+        top: calc(var(--grid-cell)*1);
+        left: 0;
+        right: 0;
+        margin: auto;
     }
     #circle {
-        position: fixed;
+        z-index: 9;
+        position: absolute;
         height: calc(var(--grid-cell)*1);
         width: calc(var(--grid-cell)*1);
         background-image: url("astro.png");
@@ -111,18 +129,14 @@ function removeLoader(){
         background-size: 100%;
     }
     .circle.move {
-        transition: 1s;
+        transition: 1s steps(15);
     }
     #box {
         position: absolute;
         height: calc(var(--grid-cell)*4);
         width: calc(var(--grid-cell)*4);
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
         background: slateblue;
-        position: fixed;
-        opacity: 10%;
+        opacity: 50%;
     }
     #uppad {
         position: absolute;
@@ -199,24 +213,23 @@ function removeLoader(){
         }
     }
     #collide {
-        position: relative;
-        width: 50px;
-        height: 500px;
-        margin-top: -500px;
+        position: absolute;
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
         background: linear-gradient(#000, red, yellow);
     }
     #camera {
         position: fixed;
-        width: 100%;
-        height: 100%;
+        width: calc(var(--grid-cell)*4);
+        height: calc(var(--grid-cell)*4);
         left: 0;
         right: 0;
-        top: 0;
-        bottom: 0;
+        margin: auto;
+        border: 1px solid white;
         pointer-events: none;
     }
     .camera.move {
-        transition: 1s;
+        transition: 1s steps(15);
     }
     .daynightcycle {
     position: fixed;
@@ -228,8 +241,7 @@ function removeLoader(){
         bottom: 0;
         left: 0;
         right: 0;
-    mix-blend-mode: soft-light;
-        opacity: 80%;
+        opacity: 50%;
     background: linear-gradient(180deg, #c0d3ff, #bdebff, #ffe68b, #ffbd00, #ff9000, #ff3600, #bc5ee1, #7c5ee1, #2b0089, #006fb4, #00ab75, #1100ba, #7d00ff, #080051);
     background-size: 2800% 2800%;
 
@@ -253,27 +265,40 @@ function removeLoader(){
     50%{background-position:49% 100%}
     100%{background-position:52% 0%}
 }
+
 </style>
     
 <body>
-
-
+    
+    
     <div id="loadingDiv"></div>
+
     
-    <div class="daynightcycle"></div>
+    <div class="daynightcycle" style="mix-blend-mode: color-burn; opacity: 10%;"></div>
+    <div class="daynightcycle" style="mix-blend-mode: multiply; opacity: 20%;"></div>
+    <div class="daynightcycle" style="mix-blend-mode: soft-light;"></div>
     
-    <div class="container">
-    <div class="circle" id="circle"></div>
-    </div>
+
+    <div class="holder">
     
+    <!--<div class="container">-->
+    <div class="circle" id="circle" style="margin:auto;top:0;left:0;right:0;bottom:0;border:1px solid red;"></div>
+    <!--</div>-->
+
+
     <div id="camera" class="camera">
         
+
     <div class="map"></div>
 
-    <div id="collide" style="top: 20%; left: 50%;"></div>
+
+    <div id="collide" style="top: calc(var(--grid-cell)*1); left: calc(var(--grid-cell)*3);"></div>
     </div>
     
+  
     <div class="box" id="box"></div>
+
+    </div>
     
 <div id="mobiledisable">
     <div class="dpad"></div>
@@ -327,9 +352,29 @@ function removeLoader(){
       if (b_1 < y_2 || y_1 > b_2 || r_1 < x_2 || x_1 > r_2) {
           return;
         } else {
-            return moveBy = -20,
-                setTimeout(function(){moveBy=0},100),
+            if (compass === 2) {
+                return moveBy = 0,
+                document.getElementById("circle").style.borderColor="blue",
+                circle.style.left = parseInt(circle.style.left) - 10 + 'px',
                 setTimeout(function(){moveBy=10},500);
+            } else if (compass === 3) {
+                return moveBy = 0,
+                document.getElementById("circle").style.borderColor="blue",
+                circle.style.top = parseInt(circle.style.top) + 10 + 'px',
+                setTimeout(function(){moveBy=10},500);
+            } else if (compass === 1) {
+                return moveBy = 0,
+                document.getElementById("circle").style.borderColor="blue",
+                circle.style.left = parseInt(circle.style.left) + 10 + 'px',
+                setTimeout(function(){moveBy=10},500);
+            } else if (compass === 4) {
+                return moveBy = 0,
+                document.getElementById("circle").style.borderColor="blue",
+                circle.style.top = parseInt(circle.style.top) - 10 + 'px',
+                setTimeout(function(){moveBy=10},500);
+            } else {
+                return;
+            }
         }
 }
     
@@ -353,56 +398,55 @@ function removeLoader(){
       var b2 = y2 + h2;
       var r2 = x2 + w2;
           
-      var one = 1;
         
           
           
       if (b1 < y2) {
           return document.getElementById("box").style.background="green",//top
-          gridtop = gridtop + 1,
+          gridtop = gridtop + 5,
           gtop.innerHTML = gridtop,
           document.getElementById("circle").style.top="0",
-          document.getElementById("camera").style.top= gridtop + '00%',
+          document.getElementById("camera").style.top= gridtop + '0%',
           document.getElementById("circle").classList.add('move'),
           document.getElementById("camera").classList.add('move'),
           moveBy = 0,
-          setTimeout(function(){moveBy = pixelSize},1000),
+          setTimeout(function(){moveBy = pixelSize*2},1000),
           setTimeout(function(){document.getElementById("camera").classList.remove('move')},1000),
           setTimeout(function(){document.getElementById("circle").classList.remove('move')},1000);
       } else if (y1 > b2) {
           return document.getElementById("box").style.background="pink",//down
-          gridtop = gridtop - 1,
+          gridtop = gridtop - 5,
           gtop.innerHTML = gridtop,
           document.getElementById("circle").style.top="0",
-          document.getElementById("camera").style.top= + gridtop + '00%',
+          document.getElementById("camera").style.top= gridtop + '0%',
           document.getElementById("circle").classList.add('move'),
           document.getElementById("camera").classList.add('move'),
           moveBy = 0,
-          setTimeout(function(){moveBy = pixelSize},1000),
+          setTimeout(function(){moveBy = pixelSize*2},1000),
           setTimeout(function(){document.getElementById("camera").classList.remove('move')},1000),
           setTimeout(function(){document.getElementById("circle").classList.remove('move')},1000);
       } else if (r1 < x2) {
           return document.getElementById("box").style.background="red",//left
-          gridleft = gridleft + 1,
+          gridleft = gridleft + 5,
           gleft.innerHTML = gridleft,
           document.getElementById("circle").style.left="0",
-          document.getElementById("camera").style.left= gridleft + '00%',
+          document.getElementById("camera").style.left= gridleft + '0%',
           document.getElementById("circle").classList.add('move'),
           document.getElementById("camera").classList.add('move'),
           moveBy = 0,
-          setTimeout(function(){moveBy = pixelSize},1000),
+          setTimeout(function(){moveBy = pixelSize*2},1000),
           setTimeout(function(){document.getElementById("camera").classList.remove('move')},1000),
           setTimeout(function(){document.getElementById("circle").classList.remove('move')},1000);
       } else if (x1 > r2) {
           return document.getElementById("box").style.background="orange",//right
-          gridleft = gridleft - 1,
+          gridleft = gridleft - 5,
           gleft.innerHTML = gridleft,
           document.getElementById("circle").style.left="0",
-          document.getElementById("camera").style.left= gridleft + '00%',
+          document.getElementById("camera").style.left= gridleft + '0%',
           document.getElementById("circle").classList.add('move'),
           document.getElementById("camera").classList.add('move'),
           moveBy = 0,
-          setTimeout(function(){moveBy = pixelSize},1000),
+          setTimeout(function(){moveBy = pixelSize*2},1000),
           setTimeout(function(){document.getElementById("camera").classList.remove('move')},1000),
           setTimeout(function(){document.getElementById("circle").classList.remove('move')},1000);
       } else {
@@ -414,12 +458,12 @@ function removeLoader(){
     
     window.setInterval(function() {
     $('#result').text(collision($('#circle'), $('#box'), $('#camera')));
-        direct.innerHTML = gridtop;
+        //direct.innerHTML = gridtop;
 }, 200);
     
     var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
     
-    let moveBy = pixelSize;
+    let moveBy = pixelSize * 2;
     
     var wrap = document.getElementById('compass');
     var compass = 0;
