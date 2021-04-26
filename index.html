@@ -76,6 +76,64 @@
     
 </style>
     
+<style>
+.dpad {
+   position:absolute;
+   right: calc(var(--pixel-size) * 20);
+   bottom: calc(var(--pixel-size) * 20);
+   width: calc(var(--pixel-size) * 37);
+   height: calc(var(--pixel-size) * 38);
+   background: green;
+}
+.dpad-button {
+   appearance:none;
+   outline:0;
+   border:0;
+   background:transparent;
+   padding:0;
+   cursor:pointer;
+}
+
+.dpad-button.pressed { opacity:10%; }
+
+.dpad-up {
+   position: absolute;
+   left: calc(var(--pixel-size) * 12);
+   top:0;
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+   border: 1px solid #fff;
+}
+.dpad-down {
+   position: absolute;
+   bottom:var(--pixel-size);
+   left: calc(var(--pixel-size) * 12);
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+   border: 1px solid #fff;
+}
+.dpad-left {
+   position: absolute;
+   top: calc(var(--pixel-size) * 12);
+   left:0;
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+   border: 1px solid #fff;
+}
+.dpad-right {
+   position: absolute;
+   top: calc(var(--pixel-size) * 12);
+   right:0;
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+   border: 1px solid #fff;
+}
+
+.dpad {
+   user-select:none;
+}
+</style>
+    
 <body>
     <div style="top:calc(var(--grid-cell)*.5);position:fixed;">
     <div class="camera">
@@ -84,6 +142,16 @@
         </div>
     </div>
     </div>
+    
+    <div class="dpad">
+        <div class="DemoDirectionUI flex-center">
+            <button class="dpad-button dpad-left"></button>
+            <button class="dpad-button dpad-up"></button>
+            <button class="dpad-button dpad-right"></button>
+            <button class="dpad-button dpad-down"></button>
+        </div>
+    </div>
+    
 </body>
     
 <script>
@@ -153,5 +221,52 @@
             held_directions.splice(index, 1)
         }
     });
+    
+    
+
+var isPressed = false;
+const removePressedAll = () => {
+   document.querySelectorAll(".dpad-button").forEach(d => {
+      d.classList.remove("pressed")
+   })
+}
+document.body.addEventListener("mousedown", () => {
+   console.log('mouse is down')
+   isPressed = true;
+})
+document.body.addEventListener("mouseup", () => {
+   console.log('mouse is up')
+   isPressed = false;
+   held_directions = [];
+   removePressedAll();
+})
+const handleDpadPress = (direction, click) => {   
+   if (click) {
+      isPressed = true;
+   }
+   held_directions = (isPressed) ? [direction] : []
+   
+   if (isPressed) {
+      removePressedAll();
+      document.querySelector(".dpad-"+direction).classList.add("pressed");
+   }
+}
+
+document.querySelector(".dpad-left").addEventListener("touchstart", (e) => handleDpadPress(directions.left, true));
+document.querySelector(".dpad-up").addEventListener("touchstart", (e) => handleDpadPress(directions.up, true));
+document.querySelector(".dpad-right").addEventListener("touchstart", (e) => handleDpadPress(directions.right, true));
+document.querySelector(".dpad-down").addEventListener("touchstart", (e) => handleDpadPress(directions.down, true));
+
+document.querySelector(".dpad-left").addEventListener("mousedown", (e) => handleDpadPress(directions.left, true));
+document.querySelector(".dpad-up").addEventListener("mousedown", (e) => handleDpadPress(directions.up, true));
+document.querySelector(".dpad-right").addEventListener("mousedown", (e) => handleDpadPress(directions.right, true));
+document.querySelector(".dpad-down").addEventListener("mousedown", (e) => handleDpadPress(directions.down, true));
+
+document.querySelector(".dpad-left").addEventListener("mouseover", (e) => handleDpadPress(directions.left));
+document.querySelector(".dpad-up").addEventListener("mouseover", (e) => handleDpadPress(directions.up));
+document.querySelector(".dpad-right").addEventListener("mouseover", (e) => handleDpadPress(directions.right));
+document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handleDpadPress(directions.down));
+    
 </script>
+    
 </html>
