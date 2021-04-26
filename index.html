@@ -20,6 +20,11 @@
         --pixel-size: 5px;
         --grid-cell: calc(var(--pixel-size)*16);
     }
+    @media only screen and (min-width: 900px) {
+        .dpad {
+            display: none;
+        }
+    }
     @media (max-width: 900px) {
         :root {
             --pixel-size: 4px;
@@ -28,6 +33,12 @@
     @media (max-width: 700px) {
         :root {
             --pixel-size: 3px;
+        }
+        }
+    }
+    @media (max-width: 600px) {
+        :root {
+            --pixel-size: 2.5px;
         }
     }
     .pixel-art {
@@ -70,12 +81,35 @@
     .icon {
         width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*1);
-        background-image: url("astro.png");
-        background-size: 100%;
         position: absolute;
         overflow: hidden;
     }
-    
+    .icon_sprite {
+        width: calc(var(--grid-cell)*4);
+        height: calc(var(--grid-cell)*4);
+        position: absolute;
+        background-image: url("sheet.png");
+        background-size: 100%;
+    }
+    .button1 {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        background: red;
+        position: fixed;
+        bottom: calc(var(--grid-cell)*1);
+        left: calc(var(--grid-cell)*1);
+    }
+    .icon[walking="false"] .icon_sprite {
+        animation: idle 1s steps(4) infinite;
+    }
+    @keyframes idle {
+        from {
+            transform: translate3d(0%, 0, 0);
+        }
+        to {
+            transform: translate3d(-100%, 0, 0);
+        }
+    }
 </style>
     
 <style>
@@ -136,16 +170,20 @@
 }
 </style>
     
+
+    
 <body>
     <div style="top:calc(var(--grid-cell)*.5);position:fixed;">
     <div class="camera">
         <div class="map pixel-art">
-        <div class="icon" facing="down" walking="true"></div>
+        <div class="icon" facing="down" walking="true">
+            <div class="icon_sprite pixel-art"></div>
+        </div>
         </div>
     </div>
     </div>
     
-    <div class="dpad">
+    <div class="dpad" id="dpad">
         <div class="DemoDirectionUI flex-center">
             <button class="dpad-button dpad-left"></button>
             <button class="dpad-button dpad-up"></button>
@@ -154,7 +192,23 @@
         </div>
     </div>
     
+    <button class="button1">disable dpad</button>
+    
 </body>
+    
+<script>
+    var padhide = 0;
+    
+    $('.button1').click(function() {
+        if (padhide === 0) {
+        padhide = padhide + 1,
+        document.getElementById("dpad").style.display="none";
+    } else {
+        padhide = padhide -1,
+        document.getElementById("dpad").style.display="block";
+    }
+    });
+</script>
     
 <script>
     var icon = document.querySelector(".icon");
