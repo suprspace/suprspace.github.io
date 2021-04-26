@@ -528,6 +528,8 @@ function removeLoader(){
   function start1() {
     counter = setInterval(function() {
       wrapper.innerHTML = count;
+      wrap.innerHTML = compass;
+      compass = 3;
       circle.style.top = parseInt(circle.style.top) - moveBy + 'px';
       count++;
     }, 5);
@@ -540,6 +542,8 @@ function removeLoader(){
       function start2() {
     counter = setInterval(function() {
       wrapper.innerHTML = count;
+      wrap.innerHTML = compass;
+      compass = 4;
       circle.style.top = parseInt(circle.style.top) + moveBy + 'px';
       count++;
     }, 5);
@@ -551,6 +555,8 @@ function removeLoader(){
       function start3() {
     counter = setInterval(function() {
       wrapper.innerHTML = count;
+      wrap.innerHTML = compass;
+      compass = 1;
       circle.style.left = parseInt(circle.style.left) - moveBy + 'px';
       count++;
     }, 5);
@@ -562,6 +568,8 @@ function removeLoader(){
       function start4() {
     counter = setInterval(function() {
       wrapper.innerHTML = count;
+      wrap.innerHTML = compass;
+      compass = 2;
       circle.style.left = parseInt(circle.style.left) + moveBy + 'px';
       count++;
     }, 5);
