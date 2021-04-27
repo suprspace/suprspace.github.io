@@ -44,6 +44,14 @@
     .pixel-art {
         image-rendering: pixelated;
     }
+    @font-face {
+        font-family: "pixel";
+        src: url("/dogica.otf");
+    }
+    @font-face {
+        font-family: "boldpixel";
+        src: url("/dogicabold.otf");
+    }
     html, body {
         height: 100%;
         overflow: hidden;
@@ -92,23 +100,79 @@
         background-size: 100%;
     }
     .button1 {
-        width: calc(var(--grid-cell)*1);
-        height: calc(var(--grid-cell)*1);
-        background: red;
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*.6);
         position: fixed;
         bottom: calc(var(--grid-cell)*1);
         left: calc(var(--grid-cell)*1);
     }
     .icon[walking="false"] .icon_sprite {
-        animation: idle 1s steps(4) infinite;
+        animation: idle 2s steps(4) infinite;
     }
     @keyframes idle {
         from {
             transform: translate3d(0%, 0, 0);
         }
         to {
-            transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-101%, 0, 0);
         }
+    }
+    button {
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+        background: none;
+        color: #fff;
+        /*background: linear-gradient(lightgrey, dimgrey);*/
+        transition: .5s;
+        font-family: pixel;
+        font-size: calc(var(--pixel-size)*2);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+    }
+    .button2 {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*1);
+        left: calc(var(--grid-cell)*1);
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: calc(var(--pixel-size)*4);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        text-shadow: 0 0 calc(var(--pixel-size)*3) #000;
+    }
+    .button3 {
+        width: calc(var(--grid-cell)*6);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*2);
+        left: calc(var(--grid-cell)*1);
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*4);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+    }
+    .menu {
+        transition: .2s steps(15);
+        width: calc(var(--grid-cell)*8);
+        height: calc(var(--grid-cell)*5);
+        position: fixed;
+        background: #000;
+        transform: translateY(calc(var(--grid-cell)*15));
+        z-index: 2;
+        color: #fff;
+    }
+    .overlay {
+        width: 1000%;
+        height: 1000%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #000;
+        position: fixed;
+        opacity: 0%;
+        pointer-events: none;
+        transition: .5s;
     }
 </style>
     
@@ -119,7 +183,8 @@
    bottom: calc(var(--pixel-size) * 20);
    width: calc(var(--pixel-size) * 37);
    height: calc(var(--pixel-size) * 38);
-   background: green;
+   background: radial-gradient(rgb(0,0,0,0), #000);
+   border-radius: 50%;
 }
 .dpad-button {
    appearance:none;
@@ -138,7 +203,8 @@
    top:0;
     width: calc(var(--pixel-size) * 12);
     height: calc(var(--pixel-size) * 12);
-   border: 1px solid #fff;
+    background: url("ud.png") no-repeat;
+    background-position: center;
 }
 .dpad-down {
    position: absolute;
@@ -146,7 +212,8 @@
    left: calc(var(--pixel-size) * 12);
     width: calc(var(--pixel-size) * 12);
     height: calc(var(--pixel-size) * 12);
-   border: 1px solid #fff;
+    background: url("dd.png") no-repeat;
+    background-position: center;
 }
 .dpad-left {
    position: absolute;
@@ -154,7 +221,8 @@
    left:0;
     width: calc(var(--pixel-size) * 12);
     height: calc(var(--pixel-size) * 12);
-   border: 1px solid #fff;
+    background: url("ld.png") no-repeat;
+    background-position: center;
 }
 .dpad-right {
    position: absolute;
@@ -162,7 +230,8 @@
    right:0;
     width: calc(var(--pixel-size) * 12);
     height: calc(var(--pixel-size) * 12);
-   border: 1px solid #fff;
+    background: url("rd.png") no-repeat;
+    background-position: center;
 }
 
 .dpad {
@@ -192,7 +261,14 @@
         </div>
     </div>
     
-    <button class="button1">disable dpad</button>
+    <button class="button2">settings</button>
+    <div class="menu" id="menu">
+        <p style="text-align:center;font-family: pixel;font-size: calc(var(--pixel-size)*3); letter-spacing: calc(var(--pixel-size)*-.1);">(PAUSED)</p>
+        <button class="button1">disable/enable dpad controls</button>
+        <button class="button3">Return</button>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
     
 </body>
     
@@ -208,6 +284,38 @@
         document.getElementById("dpad").style.display="block";
     }
     });
+    
+    var settings = 0;
+    
+    $('.button2').click(function() {
+        if (settings === 0) {
+        settings = settings + 1,
+        document.getElementById("menu").style.border="1px solid #fff",
+        document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*-2))",
+        document.getElementById("overlay").style.opacity="70%";
+    } else {
+        settings = settings -1,
+        document.getElementById("menu").style.border="none",
+        document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*15))",
+        document.getElementById("overlay").style.opacity="0%";
+    }
+    });
+    
+    $('.button3').click(function() {
+        if (settings === 0) {
+        settings = settings + 1,
+        document.getElementById("menu").style.border="1px solid #fff",
+        document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*-2))",
+        document.getElementById("overlay").style.opacity="70%";
+    } else {
+        settings = settings -1,
+        document.getElementById("menu").style.border="none",
+        document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*15))",
+        document.getElementById("overlay").style.opacity="0%";
+    }
+    });
+    
+
 </script>
     
 <script>
