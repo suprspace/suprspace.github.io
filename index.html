@@ -58,6 +58,7 @@
         background-color: #000;
     }
     body {
+        color: #fff;
         touch-action: manipulation;
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -77,6 +78,26 @@
         border: solid white;
         border-width: calc(var(--pixel-size)*.1);
         border-radius: calc(var(--pixel-size)*2);
+    }
+    .camera .ocean {
+        width: calc(var(--pixel-size)*320);
+        height: calc(var(--pixel-size)*160);
+        background-image: url("ocean.png");
+        background-size: 100%;
+        image-rendering: pixelated;
+        animation: waves steps(80) 30s infinite;
+        position: absolute;
+    }
+    @keyframes waves {
+        0% {
+            transform: translateX(0);
+        }
+        50% {
+            transform: translateX(calc(var(--pixel-size)*-160));
+        }
+        100% {
+            transform: translateX(0);
+        }
     }
     .map {
         image-rendering: pixelated;
@@ -174,6 +195,13 @@
         pointer-events: none;
         transition: .5s;
     }
+    .cell {
+        position: relative;
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*1);
+        background: #000;
+        bottom: calc(var(--grid-cell)*-5.4);
+    }
 </style>
     
 <style>
@@ -244,6 +272,7 @@
 <body>
     <div style="top:calc(var(--grid-cell)*.5);position:fixed;">
     <div class="camera">
+        <div class="ocean pixel-art"></div>
         <div class="map pixel-art">
         <div class="icon" facing="down" walking="true">
             <div class="icon_sprite pixel-art"></div>
@@ -265,14 +294,26 @@
     <div class="menu" id="menu">
         <p style="text-align:center;font-family: pixel;font-size: calc(var(--pixel-size)*3); letter-spacing: calc(var(--pixel-size)*-.1);">(PAUSED)</p>
         <button class="button1">disable/enable dpad controls</button>
-        <button class="button3">Return</button>
+        <button class="button3" id="button3">Return</button>
     </div>
     
     <div class="overlay" id="overlay"></div>
     
+    <div class="cell">
+    <p>values: <span id="test"></span></p>
+    </div>
+
+    
 </body>
     
 <script>
+    
+    document.addEventListener("keyup", function(event) {
+        if (event.keyCode === 82) {
+            document.getElementById("button3").click();
+        }
+    });
+    
     var padhide = 0;
     
     $('.button1').click(function() {
@@ -319,6 +360,12 @@
 </script>
     
 <script>
+    
+    window.setInterval(function() {
+        document.getElementById("test").innerHTML = "X: " + x + " Y: " + y;
+    },200);
+    
+    
     var icon = document.querySelector(".icon");
     var map = document.querySelector(".map");
     
@@ -343,6 +390,17 @@
         icon.setAttribute("walking", held_direction ? "true" : "false");
         
         
+   var leftLimit = -72;
+   var rightLimit = 72;
+   var topLimit = -72;
+   var bottomLimit = 72;
+   if (x < leftLimit) { x = leftLimit; }
+   if (x > rightLimit) { x = rightLimit; }
+   if (y < topLimit) { y = topLimit; }
+   if (y > bottomLimit) { y = bottomLimit; }
+
+        
+        
         var camera_left = pixelSize * 72;
         var camera_top = pixelSize * 72;
         
@@ -358,6 +416,7 @@
         })
     }
     step();
+    
     
     const directions = {
         up: "up",
@@ -385,7 +444,6 @@
             held_directions.splice(index, 1)
         }
     });
-    
     
 
 var isPressed = false;
@@ -420,7 +478,6 @@ document.querySelector(".dpad-left").addEventListener("touchstart", (e) => handl
 document.querySelector(".dpad-up").addEventListener("touchstart", (e) => handleDpadPress(directions.up, true));
 document.querySelector(".dpad-right").addEventListener("touchstart", (e) => handleDpadPress(directions.right, true));
 document.querySelector(".dpad-down").addEventListener("touchstart", (e) => handleDpadPress(directions.down, true));
-
 
     
 </script>
