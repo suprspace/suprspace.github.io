@@ -35,11 +35,6 @@
             --pixel-size: 3px;
         }
     }
-    @media (max-width: 600px) {
-        :root {
-            --pixel-size: 2.5px;
-        }
-    }
     .pixel-art {
         image-rendering: pixelated;
     }
@@ -100,7 +95,7 @@
     }
     .map {
         image-rendering: pixelated;
-        background-image: url("grass.png");
+        background-image: url("/grass.png");
         background-size: 100%;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*10);
@@ -216,7 +211,7 @@
         transition: .5s;
     }
     .cell {
-        position: relative;
+        position: fixed
         width: calc(var(--grid-cell)*5);
         height: calc(var(--grid-cell)*1);
         text-align: center;
@@ -296,7 +291,6 @@
     background: url("rd.png") no-repeat;
     background-position: center;
 }
-
 .dpad {
    user-select:none;
 }
@@ -411,8 +405,9 @@
         return false;
     });
     
+    </script>
+    <script>
     
-
 
     
     window.setInterval(function() {
