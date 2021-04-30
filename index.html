@@ -34,7 +34,6 @@
         :root {
             --pixel-size: 3px;
         }
-        }
     }
     @media (max-width: 600px) {
         :root {
@@ -101,7 +100,7 @@
     }
     .map {
         image-rendering: pixelated;
-        background-image: url("/grass.png");
+        background-image: url("grass.png");
         background-size: 100%;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*10);
@@ -150,27 +149,48 @@
         letter-spacing: calc(var(--pixel-size)*-.1);
     }
     .button2 {
-        width: calc(var(--grid-cell)*1);
-        height: calc(var(--grid-cell)*1);
         position: fixed;
         bottom: calc(var(--grid-cell)*1);
         left: calc(var(--grid-cell)*1);
-        background: transparent;
         border: none;
-        color: #fff;
-        font-size: calc(var(--pixel-size)*4);
-        letter-spacing: calc(var(--pixel-size)*-.1);
-        text-shadow: 0 0 calc(var(--pixel-size)*3) #000;
+        background-size: 100%;
+        background-image: url('gear.png');
+        width: calc(var(--grid-cell)*.5);
+        height: calc(var(--grid-cell)*.5);
     }
     .button3 {
         width: calc(var(--grid-cell)*6);
         height: calc(var(--grid-cell)*1);
         position: fixed;
-        bottom: calc(var(--grid-cell)*2);
+        bottom: calc(var(--grid-cell)*1.8);
         left: calc(var(--grid-cell)*1);
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*4);
         letter-spacing: calc(var(--pixel-size)*-.1);
+    }
+    .button6 {
+        width: calc(var(--grid-cell)*6);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*3);
+        left: calc(var(--grid-cell)*1);
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*4);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+    }
+    .button4 {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*.6);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*1);
+        left: calc(var(--grid-cell)*6);
+    }
+    .button5 {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*.6);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*1);
+        left: calc(var(--grid-cell)*4.5);
     }
     .menu {
         transition: .2s steps(15);
@@ -197,10 +217,25 @@
     }
     .cell {
         position: relative;
-        width: calc(var(--grid-cell)*2);
+        width: calc(var(--grid-cell)*5);
         height: calc(var(--grid-cell)*1);
-        background: #000;
-        bottom: calc(var(--grid-cell)*-5.4);
+        text-align: center;
+        left: calc(var(--grid-cell)*1.5);
+        font-family: pixel;
+        font-size: calc(var(--pixel-size)*3);
+    }
+    .wall {
+        position: relative;
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*2);
+        background-color: aqua;
+    }
+    .gear {
+        background-size: 100%;
+        background-image: url('gear/png');
+        position: relative;
+        width: calc(var(--pixel-size)*32);
+        height: calc(var(--pixel-size)*32);
     }
 </style>
     
@@ -266,9 +301,7 @@
    user-select:none;
 }
 </style>
-    
-
-    
+  
 <body>
     <div style="top:calc(var(--grid-cell)*.5);position:fixed;">
     <div class="camera">
@@ -277,6 +310,7 @@
         <div class="icon" facing="down" walking="true">
             <div class="icon_sprite pixel-art"></div>
         </div>
+            <div class="wall"></div>
         </div>
     </div>
     </div>
@@ -290,18 +324,20 @@
         </div>
     </div>
     
-    <button class="button2">settings</button>
+    <button class="button2"></button>
     <div class="menu" id="menu">
-        <p style="text-align:center;font-family: pixel;font-size: calc(var(--pixel-size)*3); letter-spacing: calc(var(--pixel-size)*-.1);">(PAUSED)</p>
+        <p style="text-align:center;font-family: pixel;font-size: calc(var(--pixel-size)*3); letter-spacing: calc(var(--pixel-size)*-.1);">Options</p>
         <button class="button1">disable/enable dpad controls</button>
+        <button class="button4">resize+</button>
+        <button class="button5">resize-</button>
         <button class="button3" id="button3">Return</button>
+        <button class="button6" id="button6">Restart</button>
+        <div class="cell">
+            <p>Coordinates: <span id="test"></span></p>
+        </div>
     </div>
     
     <div class="overlay" id="overlay"></div>
-    
-    <div class="cell">
-    <p>values: <span id="test"></span></p>
-    </div>
 
     
 </body>
@@ -356,10 +392,28 @@
     }
     });
     
-
-</script>
     
-<script>
+    var plusone = 2;
+
+    
+    $('.button4').click(function() {
+        plusone = plusone + 1;
+        document.documentElement.style.setProperty('--pixel-size', (plusone + "px"));
+    });
+    
+    $('.button5').click(function() {
+        plusone = plusone -1;
+        document.documentElement.style.setProperty('--pixel-size', (plusone + "px"));
+    });
+    
+    $('.button6').click(function() {
+        location.reload();
+        return false;
+    });
+    
+    
+
+
     
     window.setInterval(function() {
         document.getElementById("test").innerHTML = "X: " + x + " Y: " + y;
