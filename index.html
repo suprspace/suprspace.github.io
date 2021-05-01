@@ -47,10 +47,11 @@
         src: url("/dogicabold.otf");
     }
     html, body {
-        height: 100%;
+        max-height: 100%;
         overflow: hidden;
     }
     body {
+        -webkit-tap-highlight-color: transparent;
         background: #000;
         color: #fff;
         touch-action: manipulation;
@@ -72,6 +73,13 @@
         border: solid white;
         border-width: calc(var(--pixel-size)*.1);
         border-radius: calc(var(--pixel-size)*2);
+        animation: darken 30s ease infinite;
+        box-shadow: 0 0 calc(var(--pixel-size)*20) #000;
+    }
+    @keyframes darken {
+        0% {filter:brightness(1)}
+        50% {filter:brightness(.9)}
+        100% {filter:brightness(1)}
     }
     .camera .ocean {
         width: calc(var(--pixel-size)*320);
@@ -145,13 +153,15 @@
     }
     .button2 {
         position: fixed;
-        bottom: calc(var(--grid-cell)*1);
-        left: calc(var(--grid-cell)*1);
+        top: calc(var(--grid-cell)*.225);
+        right: calc(var(--grid-cell)*.3);
         border: none;
         background-size: 100%;
         background-image: url('gear.png');
         width: calc(var(--grid-cell)*.5);
         height: calc(var(--grid-cell)*.5);
+        opacity: 30%;
+        z-index: 2;
     }
     .button3 {
         width: calc(var(--grid-cell)*6);
@@ -193,6 +203,15 @@
         position: fixed;
         bottom: calc(var(--grid-cell)*.4);
         left: calc(var(--grid-cell)*1);
+    }
+    .picker {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*.75);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*.325);
+        left: calc(var(--grid-cell)*3.1);
+        border: 0;
+        background: transparent;
     }
     .menu {
         transition: .2s steps(15);
@@ -242,17 +261,56 @@
         width: calc(var(--pixel-size)*32);
         height: calc(var(--pixel-size)*32);
     }
-    .orb {
-        width: calc(var(--grid-cell)*1);
-        height: calc(var(--grid-cell)*.5);
-        border-radius: calc(var(--grid-cell)*1);
-        position: fixed;
-        bottom: calc(var(--grid-cell)*.4);
-        left: calc(var(--grid-cell)*3.2);
-        border: solid #fff;
-        border-width: calc(var(--pixel-size)*.1);
-        /*box-shadow: inset 0 0 calc(var(--pixel-size)*2) #000;*/
+    .loader,
+    .loader:after {
+        border-radius: 50%;
+        width: 100%;
+        height: 1000%;
+        z-index: 999;
     }
+    #loading {
+        position:absolute;
+        width: auto;
+        height: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color:#FFF;
+        z-index: 999;
+}
+    .header {
+        width: 100%;
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        background: #000;
+        opacity: 40%;
+        box-shadow: inset 0 0 calc(var(--grid-cell)*.5) #fff;
+        top: 0;
+    }
+</style>
+    
+<style>
+    .daynightcycle {
+        z-index: 2;
+        /*mix-blend-mode: color-burn;*/
+        mix-blend-mode: color-burn;
+        opacity: 80%;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        position: fixed;
+    background: linear-gradient(180deg, #bdf7ff, #ffffae, #c3e5ff, #fff190, #ffd092, #ff6e6e, #df92ff, #a692ff, #92aaff);
+    background-size: 2600% 2600%;
+
+    -webkit-animation: cycle 30s ease infinite;
+    -moz-animation: cycle 30s ease infinite;
+    animation: cycle 30s ease infinite;
+}
+@keyframes cycle {
+    0%{background-position:50% 0%;opacity:20%;}
+    50%{background-position:50% 100%;opacity:80%;}
+    100%{background-position:50% 0%;opacity:20%;}
+}
 </style>
     
 <style>
@@ -318,8 +376,13 @@
 </style>
   
 <body id="body">
-    <div style="top:calc(var(--grid-cell)*.5);position:fixed;">
+    
+    <!--<div class="header"></div>-->
+    
+    <div style="top:calc(var(--grid-cell)*1);position:fixed;">
+        <div class="daynightcycle"></div>
     <div class="camera">
+        
         <div class="ocean pixel-art"></div>
         <div class="map pixel-art">
         <div class="icon" facing="down" walking="true">
@@ -329,6 +392,8 @@
         </div>
     </div>
     </div>
+
+    
     
     <div class="dpad" id="dpad">
         <div class="DemoDirectionUI flex-center">
@@ -339,7 +404,7 @@
         </div>
     </div>
     
-    <button class="button2"></button>
+    <button class="button2" id="button2"></button>
     <div class="menu" id="menu">
         <p style="text-align:center;font-family: pixel;font-size: calc(var(--pixel-size)*3); letter-spacing: calc(var(--pixel-size)*-.1);">Options</p>
         <button class="button1">disable/enable dpad controls</button>
@@ -348,9 +413,7 @@
         <button class="button3" id="button3">Return</button>
         <button class="button6" id="button6">Restart</button>
         <button class="button7" id="button7">Change Theme</button>
-        <div class="orb" id="orb1" style="background: #373845;left: calc(var(--grid-cell)*3.4);border-width:calc(var(--pixel-size)*.3)"></div>
-        <div class="orb" id="orb2" style="background: #a88e65;left: calc(var(--grid-cell)*4.725);opacity: 70%;"></div>
-        <div class="orb" id="orb3" style="background: #403a5e;left: calc(var(--grid-cell)*6);opacity: 70%;"></div>
+        <input class="picker" type="color" id="colorme" value="#000">
         <div class="cell">
             <p>Coordinates: <span id="test"></span></p>
         </div>
@@ -388,11 +451,15 @@
         settings = settings + 1,
         document.getElementById("menu").style.border="1px solid #fff",
         document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*-2))",
+        document.getElementById("menu").style.opacity="100%",
+        document.getElementById("button2").style.opacity="100%",
         document.getElementById("overlay").style.opacity="70%";
     } else {
         settings = settings -1,
         document.getElementById("menu").style.border="none",
         document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*15))",
+        document.getElementById("menu").style.opacity="0%",
+        document.getElementById("button2").style.opacity="30%",
         document.getElementById("overlay").style.opacity="0%";
     }
     });
@@ -403,47 +470,21 @@
         document.getElementById("menu").style.border="1px solid #fff",
         document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*-2))",
         document.getElementById("menu").style.opacity="100%",
+        document.getElementById("button2").style.opacity="100%",
         document.getElementById("overlay").style.opacity="70%";
     } else {
         settings = settings -1,
         document.getElementById("menu").style.border="none",
         document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*15))",
         document.getElementById("menu").style.opacity="0%",
+        document.getElementById("button2").style.opacity="30%",
         document.getElementById("overlay").style.opacity="0%";
     }
     });
     
-    var theme = 0;
-    
+
     $('.button7').click(function() {
-        if (theme === 0) {
-        theme = theme + 1,
-        document.getElementById("orb1").style.borderWidth="calc(var(--pixel-size)*.1)",
-        document.getElementById("orb1").style.opacity="70%",
-        document.getElementById("orb2").style.borderWidth="calc(var(--pixel-size)*.3)",
-        document.getElementById("orb2").style.opacity="100%",
-        document.getElementById("orb3").style.borderWidth="calc(var(--pixel-size)*.1)",
-        document.getElementById("orb3").style.opacity="70%",
-        document.getElementById("body").style.background = "#a88e65";
-    } else if (theme === 1) {
-        theme = theme + 1,
-        document.getElementById("orb1").style.borderWidth="calc(var(--pixel-size)*.1)",
-        document.getElementById("orb1").style.opacity="70%",
-        document.getElementById("orb2").style.borderWidth="calc(var(--pixel-size)*.1)",
-        document.getElementById("orb2").style.opacity="70%",
-        document.getElementById("orb3").style.borderWidth="calc(var(--pixel-size)*.3)",
-        document.getElementById("orb3").style.opacity="100%",
-        document.getElementById("body").style.background = "#403a5e";
-    } else {
-        theme = theme - 2,
-        document.getElementById("orb1").style.borderWidth="calc(var(--pixel-size)*.3)",
-        document.getElementById("orb1").style.opacity="100%",
-        document.getElementById("orb2").style.borderWidth="calc(var(--pixel-size)*.1)",
-        document.getElementById("orb2").style.opacity="70%",
-        document.getElementById("orb3").style.borderWidth="calc(var(--pixel-size)*.1)",
-        document.getElementById("orb3").style.opacity="70%",
-        document.getElementById("body").style.background = "#000";
-    }
+        document.getElementById("body").style.background = document.getElementById("colorme").value;
     });
     
     
@@ -466,8 +507,26 @@
     });
     
     </script>
+    
+    <script>
+$('body').append('<div style="" id="loading"><div class= "post"></div></div>');
+$(window).on('load', function(){
+  setTimeout(removeLoader, 1500); //wait for page load PLUS two seconds.
+});
+function removeLoader(){
+    $( "#loading" ).fadeOut(500, function() {
+        $('html, body').css({overflow: 'hidden'});
+      // fadeOut complete. Remove the loading div
+      $('html, body').css({overflow: 'visible'});
+      $( "#loading" ).remove(); //makes page more lightweight 
+  });  
+}
+</script>
+    
 <script>
-  
+    
+    setTimeout(function() { speed = 1; }, 2000);
+    
     window.setInterval(function() {
         document.getElementById("test").innerHTML = "X: " + x + " Y: " + y;
     },200);
