@@ -49,9 +49,9 @@
     html, body {
         height: 100%;
         overflow: hidden;
-        background-color: #000;
     }
     body {
+        background: #000;
         color: #fff;
         touch-action: manipulation;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -118,7 +118,7 @@
         width: calc(var(--grid-cell)*2);
         height: calc(var(--grid-cell)*.6);
         position: fixed;
-        bottom: calc(var(--grid-cell)*1);
+        bottom: calc(var(--grid-cell)*1.1);
         left: calc(var(--grid-cell)*1);
     }
     .icon[walking="false"] .icon_sprite {
@@ -167,7 +167,7 @@
         width: calc(var(--grid-cell)*6);
         height: calc(var(--grid-cell)*1);
         position: fixed;
-        bottom: calc(var(--grid-cell)*3);
+        bottom: calc(var(--grid-cell)*2.9);
         left: calc(var(--grid-cell)*1);
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*4);
@@ -177,15 +177,22 @@
         width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*.6);
         position: fixed;
-        bottom: calc(var(--grid-cell)*1);
+        bottom: calc(var(--grid-cell)*1.1);
         left: calc(var(--grid-cell)*6);
     }
     .button5 {
         width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*.6);
         position: fixed;
-        bottom: calc(var(--grid-cell)*1);
+        bottom: calc(var(--grid-cell)*1.1);
         left: calc(var(--grid-cell)*4.5);
+    }
+    .button7 {
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*.6);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*.4);
+        left: calc(var(--grid-cell)*1);
     }
     .menu {
         transition: .2s steps(15);
@@ -196,6 +203,7 @@
         transform: translateY(calc(var(--grid-cell)*15));
         z-index: 2;
         color: #fff;
+        opacity: 100%;
     }
     .overlay {
         width: 1000%;
@@ -221,9 +229,11 @@
     }
     .wall {
         position: relative;
-        width: calc(var(--grid-cell)*2);
-        height: calc(var(--grid-cell)*2);
-        background-color: aqua;
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        background: aqua;
+        left: calc(var(--grid-cell)*8);
+        top: calc(var(--grid-cell)*8);
     }
     .gear {
         background-size: 100%;
@@ -231,6 +241,17 @@
         position: relative;
         width: calc(var(--pixel-size)*32);
         height: calc(var(--pixel-size)*32);
+    }
+    .orb {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*.5);
+        border-radius: calc(var(--grid-cell)*1);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*.4);
+        left: calc(var(--grid-cell)*3.2);
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+        /*box-shadow: inset 0 0 calc(var(--pixel-size)*2) #000;*/
     }
 </style>
     
@@ -296,7 +317,7 @@
 }
 </style>
   
-<body>
+<body id="body">
     <div style="top:calc(var(--grid-cell)*.5);position:fixed;">
     <div class="camera">
         <div class="ocean pixel-art"></div>
@@ -304,7 +325,7 @@
         <div class="icon" facing="down" walking="true">
             <div class="icon_sprite pixel-art"></div>
         </div>
-            <!--<div class="wall"></div>-->
+            <div class="wall" id="wall"></div>
         </div>
     </div>
     </div>
@@ -326,6 +347,10 @@
         <button class="button5">resize-</button>
         <button class="button3" id="button3">Return</button>
         <button class="button6" id="button6">Restart</button>
+        <button class="button7" id="button7">Change Theme</button>
+        <div class="orb" id="orb1" style="background: #373845;left: calc(var(--grid-cell)*3.4);border-width:calc(var(--pixel-size)*.3)"></div>
+        <div class="orb" id="orb2" style="background: #a88e65;left: calc(var(--grid-cell)*4.725);opacity: 70%;"></div>
+        <div class="orb" id="orb3" style="background: #403a5e;left: calc(var(--grid-cell)*6);opacity: 70%;"></div>
         <div class="cell">
             <p>Coordinates: <span id="test"></span></p>
         </div>
@@ -377,12 +402,47 @@
         settings = settings + 1,
         document.getElementById("menu").style.border="1px solid #fff",
         document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*-2))",
+        document.getElementById("menu").style.opacity="100%",
         document.getElementById("overlay").style.opacity="70%";
     } else {
         settings = settings -1,
         document.getElementById("menu").style.border="none",
         document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*15))",
+        document.getElementById("menu").style.opacity="0%",
         document.getElementById("overlay").style.opacity="0%";
+    }
+    });
+    
+    var theme = 0;
+    
+    $('.button7').click(function() {
+        if (theme === 0) {
+        theme = theme + 1,
+        document.getElementById("orb1").style.borderWidth="calc(var(--pixel-size)*.1)",
+        document.getElementById("orb1").style.opacity="70%",
+        document.getElementById("orb2").style.borderWidth="calc(var(--pixel-size)*.3)",
+        document.getElementById("orb2").style.opacity="100%",
+        document.getElementById("orb3").style.borderWidth="calc(var(--pixel-size)*.1)",
+        document.getElementById("orb3").style.opacity="70%",
+        document.getElementById("body").style.background = "#a88e65";
+    } else if (theme === 1) {
+        theme = theme + 1,
+        document.getElementById("orb1").style.borderWidth="calc(var(--pixel-size)*.1)",
+        document.getElementById("orb1").style.opacity="70%",
+        document.getElementById("orb2").style.borderWidth="calc(var(--pixel-size)*.1)",
+        document.getElementById("orb2").style.opacity="70%",
+        document.getElementById("orb3").style.borderWidth="calc(var(--pixel-size)*.3)",
+        document.getElementById("orb3").style.opacity="100%",
+        document.getElementById("body").style.background = "#403a5e";
+    } else {
+        theme = theme - 2,
+        document.getElementById("orb1").style.borderWidth="calc(var(--pixel-size)*.3)",
+        document.getElementById("orb1").style.opacity="100%",
+        document.getElementById("orb2").style.borderWidth="calc(var(--pixel-size)*.1)",
+        document.getElementById("orb2").style.opacity="70%",
+        document.getElementById("orb3").style.borderWidth="calc(var(--pixel-size)*.1)",
+        document.getElementById("orb3").style.opacity="70%",
+        document.getElementById("body").style.background = "#000";
     }
     });
     
@@ -406,10 +466,8 @@
     });
     
     </script>
-    <script>
-    
-
-    
+<script>
+  
     window.setInterval(function() {
         document.getElementById("test").innerHTML = "X: " + x + " Y: " + y;
     },200);
@@ -447,7 +505,25 @@
    if (x > rightLimit) { x = rightLimit; }
    if (y < topLimit) { y = topLimit; }
    if (y > bottomLimit) { y = bottomLimit; }
+        
 
+  if ((x >= 40 && x <= 60 && y >= 40 && y <= 60) 
+      || 
+      (x >= 70 && x <= 100 && y >= 70 && y <= 100))
+     {
+    document.getElementById("wall").style.background = 'red',
+        speed = 0,
+        setTimeout(function() { speed = 1; }, 2000);
+     }
+    else 
+     {
+    document.getElementById("wall").style.background = 'blue';
+  }
+        
+        
+        if ( x == -50 && y == -50) {
+            document.getElementById("wall").style.background = 'red';
+        }
         
         
         var camera_left = pixelSize * 72;
