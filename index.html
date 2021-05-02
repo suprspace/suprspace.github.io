@@ -129,8 +129,19 @@
         bottom: calc(var(--grid-cell)*1.1);
         left: calc(var(--grid-cell)*1);
     }
+    .icon[walking="false"][facing="right"] .icon_sprite {
+        animation: rightidle 1s steps(2) infinite;
+        background-position-y: calc(var(--grid-cell)*-3);
+    }
+    .icon[walking="false"][facing="left"] .icon_sprite {
+        animation: leftidle 1s steps(2) infinite;
+        background-position-y: calc(var(--grid-cell)*-3);
+    }
     .icon[walking="false"] .icon_sprite {
         animation: idle 2s steps(4) infinite;
+    }
+    .icon[walking="true"] .icon_sprite {
+        animation: idle 1s steps(4) infinite;
     }
     @keyframes idle {
         from {
@@ -139,6 +150,28 @@
         to {
             transform: translate3d(-101%, 0, 0);
         }
+    }
+    @keyframes rightidle {
+        from {
+            transform: translate3d(0%, 0, 0);
+        }
+        to {
+            transform: translate3d(-50%, 0, 0);
+        }
+    }
+    @keyframes leftidle {
+        from {
+            transform: translate3d(-50%, 0, 0);
+        }
+        to {
+            transform: translate3d(-100%, 0, 0);
+        }
+    }
+    .icon[facing="right"] .icon_sprite {
+        background-position-y: calc(var(--grid-cell)*-1);
+    }
+    .icon[facing="left"] .icon_sprite {
+        background-position-y: calc(var(--grid-cell)*-2);
     }
     button {
         border: solid #fff;
@@ -206,11 +239,12 @@
     }
     .picker {
         width: calc(var(--grid-cell)*1);
-        height: calc(var(--grid-cell)*.75);
+        height: calc(var(--grid-cell)*.6);
         position: fixed;
-        bottom: calc(var(--grid-cell)*.325);
+        bottom: calc(var(--grid-cell)*.4);
         left: calc(var(--grid-cell)*3.1);
-        border: 0;
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
         background: transparent;
     }
     .menu {
@@ -288,6 +322,108 @@
         box-shadow: inset 0 0 calc(var(--grid-cell)*.5) #fff;
         top: 0;
     }
+    .glow {
+        height: calc(var(--grid-cell)*1.5);
+        width: calc(var(--grid-cell)*1.5);
+        position: absolute;
+        z-index: 1;
+        top: calc(var(--grid-cell)*4.25);
+        left: calc(var(--grid-cell)*4.25);
+        background: orangered;
+        border-radius: calc(var(--grid-cell)*1);
+        filter: blur(calc(var(--grid-cell)*.7));
+        mix-blend-mode: screen;
+        animation: torch 30s ease infinite;
+    }
+    @keyframes torch {
+    0%{opacity:0%;}
+    50%{opacity:90%;}
+    100%{opacity:0%;}
+}
+    .shadow {
+        background-image: url(shadow.png);
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        background-size: 100%;
+        position: fixed;
+        top: calc(var(--grid-cell)*.2);
+        z-index: -1;
+        opacity: 20%;
+    }
+    .clock {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        background-image: url(clock.png);
+        background-size: 100%;
+        z-index: 3;
+        border-radius: calc(var(--grid-cell)*1);
+        top: calc(var(--grid-cell)*.2);
+        left: calc(var(--grid-cell)*.2);
+        image-rendering: pixelated;
+    }
+    .ticker {
+        width: calc(var(--pixel-size)*18);
+        height: calc(var(--pixel-size)*18);
+        position: fixed;
+        background: conic-gradient(transparent,transparent,transparent,#fff,transparent,transparent,transparent,transparent,transparent,transparent,transparent);
+        filter: contrast(1);
+        z-index: 2;
+        border-radius: calc(var(--grid-cell)*1);
+        top: calc(var(--pixel-size)*1.9);
+        left: calc(var(--pixel-size)*1.9);
+        animation: clock 15s linear infinite;
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+        background-color: #000;
+    }
+    .stats {
+        width: calc(var(--grid-cell)*3.2);
+        height: calc(var(--grid-cell)*.3);
+        position: fixed;
+        z-index: 3;
+        top: calc(var(--grid-cell)*.2);
+        left: calc(var(--grid-cell)*1.5);
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        background: #000;
+        text-align: center;
+        border: solid #fff;
+        padding-top: calc(var(--pixel-size)*2);
+        border-width: calc(var(--pixel-size)*.1);
+    }
+    .timer {
+        width: calc(var(--grid-cell)*3.2);
+        height: calc(var(--grid-cell)*.3);
+        position: fixed;
+        z-index: 3;
+        top: calc(var(--grid-cell)*.75);
+        left: calc(var(--grid-cell)*1.5);
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        background: #000;
+        text-align: center;
+        border: solid #fff;
+        padding-top: calc(var(--pixel-size)*2);
+        border-width: calc(var(--pixel-size)*.1);
+    }
+    @keyframes clock {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    .topbar {
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*1.5);
+        position: fixed;
+        background: linear-gradient(#000, transparent);
+        z-index: 1;
+        /*border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);*/
+    }
 </style>
     
 <style>
@@ -315,7 +451,7 @@
     
 <style>
 .dpad {
-   position:absolute;
+   position: fixed;
    right: calc(var(--pixel-size) * 20);
    bottom: calc(var(--pixel-size) * 20);
    width: calc(var(--pixel-size) * 37);
@@ -342,6 +478,8 @@
     height: calc(var(--pixel-size) * 12);
     background: url("ud.png") no-repeat;
     background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
 }
 .dpad-down {
    position: absolute;
@@ -351,6 +489,8 @@
     height: calc(var(--pixel-size) * 12);
     background: url("dd.png") no-repeat;
     background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
 }
 .dpad-left {
    position: absolute;
@@ -360,6 +500,8 @@
     height: calc(var(--pixel-size) * 12);
     background: url("ld.png") no-repeat;
     background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
 }
 .dpad-right {
    position: absolute;
@@ -369,6 +511,8 @@
     height: calc(var(--pixel-size) * 12);
     background: url("rd.png") no-repeat;
     background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
 }
 .dpad {
    user-select:none;
@@ -379,20 +523,35 @@
     
     <!--<div class="header"></div>-->
     
+    <div class="loader"></div>
+    
     <div style="top:calc(var(--grid-cell)*1);position:fixed;">
+
+        <div class="glow"></div>
+        <div class="glow"></div>
+        <div class="glow"></div>
+        
         <div class="daynightcycle"></div>
     <div class="camera">
-        
+        <div class="topbar">
+        <div class="ticker"></div>
+        <div class="clock"></div>
+        <div class="stats" id="days"></div>
+        <div class="timer" id="timer"></div>
+        </div>
         <div class="ocean pixel-art"></div>
         <div class="map pixel-art">
-        <div class="icon" facing="down" walking="true">
-            <div class="icon_sprite pixel-art"></div>
-        </div>
+        <div class="icon clearfix" facing="down" walking="true">
+            <div class="shadow"></div>
+            <div class="icon_sprite pixel-art">
+            </div>
+            </div>
+
+            
             <div class="wall" id="wall"></div>
         </div>
     </div>
     </div>
-
     
     
     <div class="dpad" id="dpad">
@@ -425,6 +584,70 @@
 </body>
     
 <script>
+    
+    var daycount = 0;
+    var mms = 0;
+    var ms = 0;
+    var s = 0;
+    var min = 0;
+    var minute = 0;
+    var ten = 0;
+    
+    window.setInterval(function() {
+        mms = mms + 1;
+    },10);
+    
+    window.setInterval(function() {
+        ms = ms + 1;
+    },100);
+    
+    window.setInterval(function() {
+        daycount = daycount + 1;
+    },30000);
+    
+    window.setInterval(function() {
+        document.getElementById("days").innerHTML = "Days Survived: " + daycount;
+    },1000);
+    
+    window.setInterval(function() {
+        document.getElementById("timer").innerHTML = '00:' + ten + '' + minute + ':' + min + '' + s + ':' + ms + '' + mms;
+    },10);
+    
+    window.setInterval(function() {
+        if (mms > 8){
+            mms = 0;
+            }
+    },10);
+    
+    window.setInterval(function() {
+        if (ms > 8){
+            ms = 0,
+            s = s + 1;
+            }
+    },10);
+    
+    window.setInterval(function() {
+        if (s > 9){
+            s = 0,
+            min = min + 1;
+            }
+    },100);
+    
+    window.setInterval(function() {
+        if (min > 5 && s == 9){
+            min = 0,
+            minute = minute + 1;
+            }
+    },100);
+    
+    window.setInterval(function() {
+        if (minute > 5 && min == 9){
+            minute = 0,
+            ten = ten + 1;
+            }
+    },1000);
+
+
     
     document.addEventListener("keyup", function(event) {
         if (event.keyCode === 82) {
