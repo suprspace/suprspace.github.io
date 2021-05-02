@@ -429,6 +429,19 @@
         /*border: solid #fff;
         border-width: calc(var(--pixel-size)*.1);*/
     }
+    .grid {
+        z-index: 4;
+        display: grid;
+        width: calc(var(--grid-cell)*7);
+        height: calc(var(--grid-cell)*7);
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+    .square {
+        aspect-ratio: 1;
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+    }
+
 </style>
     
 <style>
@@ -528,8 +541,6 @@
     
     <!--<div class="header"></div>-->
     
-
-    
     <div style="top:calc(var(--grid-cell)*1);position:fixed;">
         
 
@@ -540,7 +551,10 @@
         <div class="daynightcycle"></div>
     <div class="camera">
         <!--<div class="topbar">-->
-
+        <div class="ticker"></div>
+        <div class="clock"></div>
+        <div class="stats" id="days"></div>
+        <div class="timer" id="timer"></div>
         <!--</div>-->
         <div class="ocean pixel-art"></div>
         <div class="map pixel-art">
@@ -550,6 +564,34 @@
             </div>
             </div>
 
+  <!--  <div class="grid">
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+
+    </div> -->
             
             <div class="wall" id="wall"></div>
         </div>
