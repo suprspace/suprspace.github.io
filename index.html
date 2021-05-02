@@ -70,8 +70,6 @@
         height: calc(var(--pixel-size)*160);
         overflow: hidden;
         position: relative;
-        border: solid white;
-        border-width: calc(var(--pixel-size)*.1);
         border-radius: calc(var(--pixel-size)*2);
         animation: darken 30s ease infinite;
         box-shadow: 0 0 calc(var(--pixel-size)*20) #000;
@@ -292,6 +290,7 @@
     .gear {
         background-size: 100%;
         background-image: url('gear/png');
+        image-rendering: pixelated;
         position: relative;
         width: calc(var(--pixel-size)*32);
         height: calc(var(--pixel-size)*32);
@@ -383,12 +382,12 @@
         background-color: #000;
     }
     .stats {
-        width: calc(var(--grid-cell)*3.2);
+        width: calc(var(--grid-cell)*1.4);
         height: calc(var(--grid-cell)*.3);
         position: fixed;
-        z-index: 3;
-        top: calc(var(--grid-cell)*.2);
-        left: calc(var(--grid-cell)*1.5);
+        z-index: 1;
+        top: calc(var(--grid-cell)*.45);
+        left: calc(var(--grid-cell)*1.2);
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*3);
         background: #000;
@@ -446,6 +445,7 @@
     
 <style>
     .daynightcycle {
+        border-radius: calc(var(--pixel-size)*2);
         z-index: 2;
         /*mix-blend-mode: color-burn;*/
         mix-blend-mode: color-burn;
@@ -554,8 +554,8 @@
         <div class="ticker"></div>
         <div class="clock"></div>
         <div class="stats" id="days"></div>
-        <div class="timer" id="timer"></div>
-        <!--</div>-->
+        <!--<div class="timer" id="timer"></div>
+        </div>-->
         <div class="ocean pixel-art"></div>
         <div class="map pixel-art">
         <div class="icon" facing="down" walking="true">
@@ -651,7 +651,7 @@
     },30000);
     
     window.setInterval(function() {
-        document.getElementById("days").innerHTML = "Days Survived: " + daycount;
+        document.getElementById("days").innerHTML = "Day " + daycount;
     },1000);
     
     window.setInterval(function() {
