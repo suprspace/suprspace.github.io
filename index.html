@@ -337,12 +337,11 @@
         border-radius: calc(var(--grid-cell)*1);
         filter: blur(calc(var(--grid-cell)*.7));
         mix-blend-mode: screen;
-        animation: torch 30s ease infinite;
     }
     @keyframes torch {
-    0%{opacity:0%;}
-    50%{opacity:90%;}
-    100%{opacity:0%;}
+    0%{opacity:100%;}
+    50%{opacity:0%;}
+    100%{opacity:100%;}
 }
     .shadow {
         background-image: url(shadow.png);
@@ -496,11 +495,14 @@
         animation-delay: 5s;
     }
     @keyframes hues {
-        from {
-            filter: hue-rotate(0deg);
+        0% {
+            filter: hue-rotate(-30deg);
         }
-        to {
-            filter: hue-rotate(360deg);
+        50% {
+            filter: hue-rotate(180deg);
+        }
+        100% {
+            filter: hue-rotate(-30deg);
         }
     }
     .mainmenu {
@@ -545,10 +547,6 @@
         position: fixed;
     background: linear-gradient(180deg, #bdf7ff, #ffffae, #c3e5ff, #fff190, #ffd092, #ff6e6e, #df92ff, #a692ff, #92aaff);
     background-size: 2600% 2600%;
-
-    -webkit-animation: cycle 30s ease infinite;
-    -moz-animation: cycle 30s ease infinite;
-    animation: cycle 30s ease infinite;
 }
 @keyframes cycle {
     0%{background-position:50% 0%;opacity:20%;}
@@ -651,11 +649,11 @@
     
     <div style="top:calc(var(--grid-cell)*1);position:fixed;">
         
-        <div class="glow"></div>
-        <div class="glow"></div>
-        <div class="glow"></div>
+        <div class="glow" id="glow"></div>
+        <div class="glow" id="glow"></div>
+        <div class="glow" id="glow"></div>
         
-        <div class="daynightcycle"></div>
+        <div class="daynightcycle" id="daynightcycle"></div>
     <div class="camera">
         <!--<div class="topbar">-->
         <!--<div class="timer" id="timer"></div>
@@ -930,6 +928,8 @@ $(window).on('load', () => {
         document.getElementById("post2").style.display="none";
         document.getElementById("post3").style.display="none";
         document.getElementById("post4").style.display="none";
+        document.getElementById("daynightcycle").style.animation="cycle 30s ease infinite";
+        document.getElementById("glow").style.animation= "torch 30s ease infinite";
     });
     
     $('.buttonspecial').click(function() {
