@@ -440,7 +440,35 @@
         border: solid #fff;
         border-width: calc(var(--pixel-size)*.1);
     }
-
+    .landingsplash {
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: fixed;
+        background: #000;
+        z-index: 10;
+    }
+    .buttonstart {
+        width: calc(var(--grid-cell)*6);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*6);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        z-index: 11;
+        border: none;
+        text-shadow: #3d03fc 0 0 calc(var(--pixel-size)*10);
+    }
+    .anim {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: calc(var(--grid-cell)*12);
+        image-rendering: pixelated;
+    }
 </style>
     
 <style>
@@ -536,14 +564,25 @@
    user-select:none;
 }
 </style>
+    
   
 <body id="body">
+    
+    
+    <button class="buttonstart" id="post">New Game</button>
+    <div class="landingsplash" id="splash">
+        
+    <img class="anim" src="lights/lights0.png"/>
+        
+    <img class="anim" src="lights/lights0.png"/ style="left:calc(var(--grid-cell)*12);">
+    <img class="anim" src="lights/lights0.png"/ style="right:calc(var(--grid-cell)*12);">
+
+    </div>
     
     <!--<div class="header"></div>-->
     
     <div style="top:calc(var(--grid-cell)*1);position:fixed;">
         
-
         <div class="glow"></div>
         <div class="glow"></div>
         <div class="glow"></div>
@@ -551,9 +590,6 @@
         <div class="daynightcycle"></div>
     <div class="camera">
         <!--<div class="topbar">-->
-        <div class="ticker"></div>
-        <div class="clock"></div>
-        <div class="stats" id="days"></div>
         <!--<div class="timer" id="timer"></div>
         </div>-->
         <div class="ocean pixel-art"></div>
@@ -617,7 +653,7 @@
         <button class="button3" id="button3">Return</button>
         <button class="button6" id="button6">Restart</button>
         <button class="button7" id="button7">Change Theme</button>
-        <input class="picker" type="color" id="colorme" value="#000">
+        <input class="picker" type="color" id="colorme" value="#000000">
         <div class="cell">
             <p>Coordinates: <span id="test"></span></p>
         </div>
@@ -627,6 +663,48 @@
 
     
 </body>
+    
+    
+<script>
+const $element = $('.anim');
+const imagePath = '/lights';
+const totalFrames = 39;
+const animationDuration = 2000;
+const timePerFrame = animationDuration / totalFrames;
+let timeWhenLastUpdate;
+let timeFromLastUpdate;
+let frameNumber = 0;
+
+function step2(startTime) {
+
+  if (!timeWhenLastUpdate) timeWhenLastUpdate = startTime;
+  timeFromLastUpdate = startTime - timeWhenLastUpdate;
+
+  if (timeFromLastUpdate > timePerFrame) {
+
+    $element.attr('src', imagePath + `/lights${frameNumber}.png`);
+    timeWhenLastUpdate = startTime;
+
+    if (frameNumber >= totalFrames) {
+      frameNumber = 1;
+    } else {
+      frameNumber = frameNumber + 1;
+    }        
+  }
+  
+  requestAnimationFrame(step2);
+}
+
+$(document).ready(() => {
+  for (var i = 1; i < totalFrames + 1; i++) {
+    $('body').append(`<div id="preload-image-${i}" style="background-image: url('${imagePath}/lights${i}.png');"></div>`);
+  }
+});
+
+$(window).on('load', () => {
+  requestAnimationFrame(step2);
+});
+</script>
     
 <script>
     
@@ -650,13 +728,13 @@
         daycount = daycount + 1;
     },30000);
     
-    window.setInterval(function() {
-        document.getElementById("days").innerHTML = "Day " + daycount;
-    },1000);
+    //window.setInterval(function() {
+        //document.getElementById("days").innerHTML = "Day " + daycount;
+    //},1000);
     
-    window.setInterval(function() {
-        document.getElementById("timer").innerHTML = '00:' + ten + '' + minute + ':' + min + '' + s + ':' + ms + '' + mms;
-    },10);
+    //window.setInterval(function() {
+        //document.getElementById("timer").innerHTML = '00:' + ten + '' + minute + ':' + min + '' + s + ':' + ms + '' + mms;
+    //},10);
     
     window.setInterval(function() {
         if (mms > 8){
@@ -774,12 +852,23 @@
         return false;
     });
     
+    $('.buttonstart').click(function() {
+        delete lefti;
+        delete righti;
+        delete topi;
+        delete bottomi;
+        document.getElementById("splash").style.display="none";
+        document.getElementById("post").style.display="none";
+    });
+    
+    
     </script>
+    
     
     <script>
 $('body').append('<div style="" id="loading"><div class= "post"></div></div>');
 $(window).on('load', function(){
-  setTimeout(removeLoader, 1500); //wait for page load PLUS two seconds.
+  setTimeout(removeLoader, 500); //wait for page load PLUS two seconds.
 });
 function removeLoader(){
     $( "#loading" ).fadeOut(500, function() {
@@ -793,11 +882,22 @@ function removeLoader(){
     
 <script>
     
-    setTimeout(function() { speed = 1; }, 2000);
     
     window.setInterval(function() {
         document.getElementById("test").innerHTML = "X: " + x + " Y: " + y;
     },200);
+    
+   lefti = -10;
+   righti = 10;
+   topi = -10;
+   bottomi = 10;
+    
+    window.setInterval(function(test) {
+   if (x < lefti) { x = lefti; }
+   if (x > righti) { x = righti; }
+   if (y < topi) { y = topi; }
+   if (y > bottomi) { y = bottomi; }
+    },100);
     
     
     var icon = document.querySelector(".icon");
@@ -806,8 +906,9 @@ function removeLoader(){
     var x = 0;
     var y = 0;
     var held_directions = [];
-    
+
     var speed = 1;
+
     
     const placeIcon = () => {
         
@@ -822,7 +923,6 @@ function removeLoader(){
             icon.setAttribute("facing", held_direction);
         }
         icon.setAttribute("walking", held_direction ? "true" : "false");
-        
         
    var leftLimit = -72;
    var rightLimit = 72;
@@ -930,8 +1030,22 @@ document.querySelector(".dpad-left").addEventListener("touchstart", (e) => handl
 document.querySelector(".dpad-up").addEventListener("touchstart", (e) => handleDpadPress(directions.up, true));
 document.querySelector(".dpad-right").addEventListener("touchstart", (e) => handleDpadPress(directions.right, true));
 document.querySelector(".dpad-down").addEventListener("touchstart", (e) => handleDpadPress(directions.down, true));
-
     
+</script>
+    
+    <script>
+$('body').append('<div style="" id="loading"></div>');
+$(window).on('load', function(){
+  setTimeout(removeLoader, 1500); //wait for page load PLUS two seconds.
+});
+function removeLoader(){
+    $( "#loading" ).fadeOut(500, function() {
+        $('html, body').css({overflow: 'hidden'});
+      // fadeOut complete. Remove the loading div
+      $('html, body').css({overflow: 'visible'});
+      $( "#loading" ).remove();
+  }); 
+}
 </script>
     
 </html>
