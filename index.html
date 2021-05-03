@@ -456,9 +456,33 @@
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*6);
         letter-spacing: calc(var(--pixel-size)*-.1);
-        z-index: 11;
+        z-index: 12;
         border: none;
         text-shadow: #3d03fc 0 0 calc(var(--pixel-size)*10);
+        animation: hues 10s linear infinite;
+        animation-delay: 5s;
+    }
+    .buttonspecial {
+        position: fixed;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        z-index: 12;
+        border: none;
+        text-shadow: #3d03fc 0 0 calc(var(--pixel-size)*10);
+        top: calc(var(--grid-cell)*.5);
+        right: calc(var(--grid-cell)*.5);
+    }
+    .title {
+        position: fixed;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        z-index: 12;
+        border: none;
+        text-shadow: #3d03fc 0 0 calc(var(--pixel-size)*10);
+        top: calc(var(--grid-cell)*.5);
+        left: calc(var(--grid-cell)*.5);
     }
     .anim {
         position: fixed;
@@ -468,6 +492,44 @@
         margin: auto;
         width: calc(var(--grid-cell)*12);
         image-rendering: pixelated;
+        animation: hues 10s linear infinite;
+        animation-delay: 5s;
+    }
+    @keyframes hues {
+        from {
+            filter: hue-rotate(0deg);
+        }
+        to {
+            filter: hue-rotate(360deg);
+        }
+    }
+    .mainmenu {
+        position: fixed;
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*5);
+        background-color: rgba(0,0,0, .3);
+        box-shadow: inset #000 0 0 calc(var(--pixel-size)*10);
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+        z-index: 11;
+        border-radius: calc(var(--pixel-size)*1);
+    }
+    .intromain {
+        z-index: 12;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*2);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        opacity: 50%;
+        position: fixed;
+        bottom: calc(var(--grid-cell)*.5);
+    }
+    .accesspoint {
+        z-index: 12;
+        color: #fff;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*2);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        display: none;
     }
 </style>
     
@@ -568,8 +630,14 @@
   
 <body id="body">
     
-    
+    <!--<div class="mainmenu"></div>-->
     <button class="buttonstart" id="post">New Game</button>
+    <button class="buttonspecial" id="post2">Special Access</button>
+    <button class="title" id="post3">Title</button>
+    <p class="intromain" id="post4">Beta Version 1.1.0 &copy; 2021</p>
+    
+    <p class="accesspoint" id="post5">You do not have special access</p>
+    
     <div class="landingsplash" id="splash">
         
     <img class="anim" src="lights/lights0.png"/>
@@ -859,6 +927,17 @@ $(window).on('load', () => {
         delete bottomi;
         document.getElementById("splash").style.display="none";
         document.getElementById("post").style.display="none";
+        document.getElementById("post2").style.display="none";
+        document.getElementById("post3").style.display="none";
+        document.getElementById("post4").style.display="none";
+    });
+    
+    $('.buttonspecial').click(function() {
+        document.getElementById("post2").style.display="none";
+        document.getElementById("post").style.display="none";
+        document.getElementById("post3").style.display="none";
+        document.getElementById("post4").style.display="none";
+        document.getElementById("post5").style.display="block";
     });
     
     
