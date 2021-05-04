@@ -128,19 +128,11 @@
         bottom: calc(var(--grid-cell)*1.1);
         left: calc(var(--grid-cell)*1);
     }
-    .icon[walking="false"][facing="right"] .icon_sprite {
-        animation: rightidle 1s steps(2) infinite;
-        background-position-y: calc(var(--grid-cell)*-3);
-    }
-    .icon[walking="false"][facing="left"] .icon_sprite {
-        animation: leftidle 1s steps(2) infinite;
-        background-position-y: calc(var(--grid-cell)*-3);
-    }
     .icon[walking="false"] .icon_sprite {
-        animation: idle 2s steps(4) infinite;
+        animation: none;
     }
     .icon[walking="true"] .icon_sprite {
-        animation: idle 1s steps(4) infinite;
+        animation: idle .9s steps(4) infinite;
     }
     @keyframes idle {
         from {
@@ -150,27 +142,17 @@
             transform: translate3d(-101%, 0, 0);
         }
     }
-    @keyframes rightidle {
-        from {
-            transform: translate3d(0%, 0, 0);
-        }
-        to {
-            transform: translate3d(-50%, 0, 0);
-        }
-    }
-    @keyframes leftidle {
-        from {
-            transform: translate3d(-50%, 0, 0);
-        }
-        to {
-            transform: translate3d(-100%, 0, 0);
-        }
-    }
     .icon[facing="right"] .icon_sprite {
         background-position-y: calc(var(--grid-cell)*-1);
     }
     .icon[facing="left"] .icon_sprite {
         background-position-y: calc(var(--grid-cell)*-2);
+    }
+    .icon[facing="up"] .icon_sprite {
+        background-position-y: calc(var(--grid-cell)*-3);
+    }
+    .icon[facing="down"] .icon_sprite {
+        background-position-y: calc(var(--grid-cell)*0);
     }
     button {
         border: solid #fff;
@@ -558,8 +540,8 @@
 <style>
 .dpad {
    position: fixed;
-   right: calc(var(--pixel-size) * 20);
-   bottom: calc(var(--pixel-size) * 20);
+   right: calc(var(--pixel-size) * 15);
+   bottom: calc(var(--pixel-size) * 15);
    width: calc(var(--pixel-size) * 37);
    height: calc(var(--pixel-size) * 38);
    background: radial-gradient(rgb(0,0,0,0), #000);
