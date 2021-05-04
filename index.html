@@ -108,14 +108,14 @@
         position: relative;
     }
     .icon {
-        width: calc(var(--grid-cell)*1);
-        height: calc(var(--grid-cell)*1);
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*2);
         position: absolute;
         overflow: hidden;
     }
     .icon_sprite {
-        width: calc(var(--grid-cell)*4);
-        height: calc(var(--grid-cell)*4);
+        width: calc(var(--grid-cell)*40);
+        height: calc(var(--grid-cell)*40);
         position: absolute;
         background-image: url("sheet.png");
         background-size: 100%;
@@ -131,28 +131,55 @@
     .icon[walking="false"] .icon_sprite {
         animation: none;
     }
-    .icon[walking="true"] .icon_sprite {
-        animation: idle .9s steps(4) infinite;
-    }
-    @keyframes idle {
+    @keyframes down {
         from {
-            transform: translate3d(0%, 0, 0);
+            background-position-x: calc(var(--grid-cell)*0);
         }
         to {
-            transform: translate3d(-101%, 0, 0);
+            background-position-x: calc(var(--grid-cell)*-8);
         }
     }
-    .icon[facing="right"] .icon_sprite {
-        background-position-y: calc(var(--grid-cell)*-1);
+    @keyframes up {
+        from {
+            background-position-x: calc(var(--grid-cell)*-8);
+        }
+        to {
+            background-position-x: calc(var(--grid-cell)*-16);
+        }
     }
-    .icon[facing="left"] .icon_sprite {
-        background-position-y: calc(var(--grid-cell)*-2);
+    @keyframes right {
+        from {
+            background-position-x: calc(var(--grid-cell)*-16);
+        }
+        to {
+            background-position-x: calc(var(--grid-cell)*-24);
+        }
     }
-    .icon[facing="up"] .icon_sprite {
-        background-position-y: calc(var(--grid-cell)*-3);
+    @keyframes left {
+        from {
+            background-position-x: calc(var(--grid-cell)*-24);
+        }
+        to {
+            background-position-x: calc(var(--grid-cell)*-32);
+        }
     }
-    .icon[facing="down"] .icon_sprite {
-        background-position-y: calc(var(--grid-cell)*0);
+    .icon[walking="true"][facing="right"] .icon_sprite {
+        animation: right 1s steps(4) infinite;
+    }
+    .icon[walking="true"][facing="left"] .icon_sprite {
+        animation: left 1s steps(4) infinite;
+    }
+    .icon[walking="true"][facing="up"] .icon_sprite {
+        animation: up 1s steps(4) infinite;
+    }
+    .icon[walking="true"][facing="down"] .icon_sprite {
+        animation: down 1s steps(4) infinite;
+    }
+    .icon[walking="false"][facing="up"] .icon_sprite {
+        background-position-x: calc(var(--grid-cell)*-16);
+    }
+    .icon[walking="false"][facing="down"] .icon_sprite {
+        background-position-x: calc(var(--grid-cell)*0);
     }
     button {
         border: solid #fff;
@@ -643,7 +670,7 @@
         <div class="ocean pixel-art"></div>
         <div class="map pixel-art">
         <div class="icon" facing="down" walking="true">
-            <div class="shadow"></div>
+            <!--<div class="shadow"></div>-->
             <div class="icon_sprite pixel-art">
             </div>
             </div>
@@ -1013,9 +1040,9 @@ function removeLoader(){
             document.getElementById("wall").style.background = 'red';
         }
         
-        
-        var camera_left = pixelSize * 72;
-        var camera_top = pixelSize * 72;
+        //72
+        var camera_left = pixelSize * 64;
+        var camera_top = pixelSize * 64;
         
         map.style.transform = `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         
