@@ -456,70 +456,43 @@
     }
     .buttonstart {
         position: relative;
-        width: calc(var(--grid-cell)*2.9);
-        height: calc(var(--grid-cell)*3.15);
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*1);
         position: fixed;
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*3);
         letter-spacing: calc(var(--pixel-size)*-.1);
         z-index: 15;
         border: none;
-        color: #000;
-        text-shadow: #fff 0  calc(var(--pixel-size)*.2) 0;
-        mix-blend-mode: overlay;
+        color: #fff;
+        text-shadow: #3d03fc 0  calc(var(--pixel-size)*.2) calc(var(--pixel-size)*2);
         opacity: 80%;
+        animation: hues 10s linear infinite;
+        animation-delay: 5s;
     }
     .buttonquick {
         position: relative;
-        width: calc(var(--grid-cell)*7.1);
-        height: calc(var(--grid-cell)*3.15);
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*2);
+        margin-top: calc(var(--grid-cell)*1);
         position: fixed;
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*3);
         letter-spacing: calc(var(--pixel-size)*-.3);
         z-index: 14;
         border: none;
-        color: #000;
-        text-shadow: #fff 0  calc(var(--pixel-size)*.2) 0;
-        mix-blend-mode: overlay;
+        color: #fff;
+        text-shadow: #3d03fc 0  calc(var(--pixel-size)*.2) calc(var(--pixel-size)*2);
         opacity: 80%;
-    }
-    .buttonbl {
-        position: relative;
-        width: calc(var(--grid-cell)*2.9);
-        height: calc(var(--grid-cell)*4.95);
-        position: fixed;
-        font-family: boldpixel;
-        font-size: calc(var(--pixel-size)*3);
-        letter-spacing: calc(var(--pixel-size)*-.3);
-        z-index: 14;
-        border: none;
-        color: #000;
-        text-shadow: #fff 0  calc(var(--pixel-size)*.2) 0;
-        mix-blend-mode: overlay;
-        opacity: 80%;
-    }
-    .buttonbr {
-        position: relative;
-        width: calc(var(--grid-cell)*7.1);
-        height: calc(var(--grid-cell)*4.95);
-        position: fixed;
-        font-family: boldpixel;
-        font-size: calc(var(--pixel-size)*3);
-        letter-spacing: calc(var(--pixel-size)*-.3);
-        z-index: 14;
-        border: none;
-        color: #000;
-        text-shadow: #fff 0  calc(var(--pixel-size)*.2) 0;
-        mix-blend-mode: overlay;
-        opacity: 80%;
+        animation: hues 10s linear infinite;
+        animation-delay: 5s;
     }
     .buttonspecial {
         position: fixed;
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*3);
         letter-spacing: calc(var(--pixel-size)*-.1);
-        z-index: 13;
+        z-index: 14;
         border: none;
         text-shadow: #3d03fc 0 0 calc(var(--pixel-size)*10);
         top: calc(var(--grid-cell)*.5);
@@ -579,7 +552,7 @@
         bottom: calc(var(--grid-cell)*.5);
     }
     .accesspoint {
-        z-index: 13;
+        z-index: 14;
         color: #fff;
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*2);
@@ -811,37 +784,14 @@
     
     <button class="buttonspecial" id="post2">Special Access</button>
 
-    <div class="panelmenu" id="post5">
+
         
     <button class="buttonstart" id="post">New Game</button>
         
-    <button class="buttonquick">Quick Start</button>
-        <button class="buttonbl">Settings</button>
-        <button class="buttonbr">Help</button>
-       
-    <div class="button0" style="left:calc(var(--grid-cell)*.45);background-image: url('button1.png');"></div>
-    <div class="button0" style="left:calc(var(--grid-cell)*.45);background-image: url('button2.png');"></div>
-        
-    <div class="button0" style="left:calc(var(--grid-cell)*.45);background-image: url('button3vines.png'); position: absolute;top:calc(var(--grid-cell)*1.8);z-index:15;"></div>
-    <div class="button0" style="left:calc(var(--grid-cell)*2.55);background-image: url('button4vines.png'); position: absolute;top:calc(var(--grid-cell)*1.9);z-index:15;"></div>
-        
-    <div class="button0" style="left:calc(var(--grid-cell)*2.55);top:calc(var(--grid-cell)*-.8);background-image: url('button3.png');"></div>
-    <div class="button0" style="left:calc(var(--grid-cell)*2.55);top:calc(var(--grid-cell)*-.8);background-image: url('button4.png');"></div>
-    </div>
+    <button class="buttonquick" id=post6>Quick Start</button>
+
     
-    <div id="post7" style="
-                position: fixed;
-                width: calc(var(--grid-cell)*4.2);
-                height: calc(var(--grid-cell)*2.2);
-                margin-top: calc(var(--grid-cell)*-3);
-                background: radial-gradient(#0b03fc,#000, #000);
-                mix-blend-mode: screen;
-                z-index: 11;
-                animation: hues 10s linear infinite;
-                animation-delay: 5s;
-                "></div>
-    
-    <div class="panel" id="post6"></div>
+
     
     
    <!-- <div class="marquee">
@@ -1168,13 +1118,14 @@ $(window).on('load', () => {
         document.getElementById("post2").style.display="none";
         document.getElementById("post3").style.display="none";
         document.getElementById("post4").style.display="none";
-        document.getElementById("post5").style.display="none";
         document.getElementById("post6").style.display="none";
         document.getElementById("post7").style.display="none";
+        }, 4000);
+        
         document.getElementById("daynightcycle").style.animation="cycle 30s ease infinite";
         document.getElementById("glow").style.animation= "glowy 30s ease infinite";
         document.getElementById("vinegar").style.animation= "glowy 30s ease infinite";
-        }, 4000),
+        
         //document.getElementById("camera").style.animation="darken 30s ease infinite;";
         document.getElementById("fade").style.animation="fadein 8s linear";
     });
@@ -1184,6 +1135,7 @@ $(window).on('load', () => {
         document.getElementById("post").style.display="none";
         document.getElementById("post3").style.display="none";
         document.getElementById("post4").style.display="none";
+        document.getElementById("post6").style.display="none";
         document.getElementById("post5").style.display="block";
     });
     
