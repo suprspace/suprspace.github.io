@@ -456,13 +456,13 @@
     }
     .buttonstart {
         position: relative;
-        width: calc(var(--grid-cell)*5);
+        width: calc(var(--grid-cell)*3);
         height: calc(var(--grid-cell)*1);
         position: fixed;
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*3);
         letter-spacing: calc(var(--pixel-size)*-.1);
-        z-index: 15;
+        z-index: 14;
         border: none;
         color: #fff;
         text-shadow: #3d03fc 0  calc(var(--pixel-size)*.2) calc(var(--pixel-size)*2);
@@ -472,9 +472,9 @@
     }
     .buttonquick {
         position: relative;
-        width: calc(var(--grid-cell)*5);
-        height: calc(var(--grid-cell)*2);
-        margin-top: calc(var(--grid-cell)*1);
+        width: calc(var(--grid-cell)*3);
+        height: calc(var(--grid-cell)*1);
+        margin-top: calc(var(--grid-cell)*2);
         position: fixed;
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*3);
@@ -777,16 +777,14 @@
   
 <body id="body">
     
+    <button class="buttonstart" id="post">New Game</button>
+    
     
     <div class="fadein" id="fade"></div>
     
     <!--<div class="mainmenu"></div>-->
     
     <button class="buttonspecial" id="post2">Special Access</button>
-
-
-        
-    <button class="buttonstart" id="post">New Game</button>
         
     <button class="buttonquick" id=post6>Quick Start</button>
 
@@ -1128,6 +1126,29 @@ $(window).on('load', () => {
         
         //document.getElementById("camera").style.animation="darken 30s ease infinite;";
         document.getElementById("fade").style.animation="fadein 8s linear";
+    });
+    
+    $('.buttonquick').click(function() {
+        delete lefti;
+        delete righti;
+        delete topi;
+        delete bottomi;
+        setTimeout(function() {
+        document.getElementById("splash").style.display="none";
+        document.getElementById("post").style.display="none";
+        document.getElementById("post2").style.display="none";
+        document.getElementById("post3").style.display="none";
+        document.getElementById("post4").style.display="none";
+        document.getElementById("post6").style.display="none";
+        document.getElementById("post7").style.display="none";
+        }, 1000);
+        
+        document.getElementById("daynightcycle").style.animation="cycle 30s ease infinite";
+        document.getElementById("glow").style.animation= "glowy 30s ease infinite";
+        document.getElementById("vinegar").style.animation= "glowy 30s ease infinite";
+        
+        //document.getElementById("camera").style.animation="darken 30s ease infinite;";
+        document.getElementById("fade").style.animation="fadein 2s linear";
     });
     
     $('.buttonspecial').click(function() {
