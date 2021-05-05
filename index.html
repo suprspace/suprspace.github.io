@@ -462,7 +462,7 @@
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*3);
         letter-spacing: calc(var(--pixel-size)*-.1);
-        z-index: 14;
+        z-index: 15;
         border: none;
         color: #000;
         text-shadow: #fff 0  calc(var(--pixel-size)*.2) 0;
@@ -811,7 +811,7 @@
     
     <button class="buttonspecial" id="post2">Special Access</button>
 
-    <div class="panelmenu">
+    <div class="panelmenu" id="post5">
         
     <button class="buttonstart" id="post">New Game</button>
         
@@ -829,7 +829,7 @@
     <div class="button0" style="left:calc(var(--grid-cell)*2.55);top:calc(var(--grid-cell)*-.8);background-image: url('button4.png');"></div>
     </div>
     
-    <div style="
+    <div id="post7" style="
                 position: fixed;
                 width: calc(var(--grid-cell)*4.2);
                 height: calc(var(--grid-cell)*2.2);
@@ -841,7 +841,7 @@
                 animation-delay: 5s;
                 "></div>
     
-    <div class="panel"></div>
+    <div class="panel" id="post6"></div>
     
     
    <!-- <div class="marquee">
@@ -1168,6 +1168,9 @@ $(window).on('load', () => {
         document.getElementById("post2").style.display="none";
         document.getElementById("post3").style.display="none";
         document.getElementById("post4").style.display="none";
+        document.getElementById("post5").style.display="none";
+        document.getElementById("post6").style.display="none";
+        document.getElementById("post7").style.display="none";
         document.getElementById("daynightcycle").style.animation="cycle 30s ease infinite";
         document.getElementById("glow").style.animation= "glowy 30s ease infinite";
         document.getElementById("vinegar").style.animation= "glowy 30s ease infinite";
