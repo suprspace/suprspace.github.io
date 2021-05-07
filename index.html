@@ -286,11 +286,9 @@
     }
     .wall {
         position: relative;
-        width: calc(var(--grid-cell)*1);
-        height: calc(var(--grid-cell)*1);
+        width: calc(var(--grid-cell)*1.25);
+        height: calc(var(--grid-cell)*1.25);
         background: aqua;
-        left: calc(var(--grid-cell)*8);
-        top: calc(var(--grid-cell)*8);
     }
     .gear {
         background-size: 100%;
@@ -588,7 +586,7 @@
         overflow: hidden;
         animation: none;
         white-space: nowrap;
-        left: 0;
+        left: calc(var(--grid-cell)*.5);
     }
     @keyframes typing {
         0% {
@@ -628,6 +626,17 @@
         margin-top: calc(var(--grid-cell)*.25);
     }
     
+</style>
+    
+
+<!--characters-->
+<style>
+    .char1 {
+        position: relative;
+        width: calc(var(--grid-cell)*1.25);
+        height: calc(var(--grid-cell)*1.25);
+        background: indigo;
+    }
 </style>
     
 <style>
@@ -871,8 +880,14 @@
     </div> -->
             
             <div class="wall" id="wall"></div>
+            
+            <div class="char1" id="char1"></div>
+            
         </div>
     </div>
+        <div class="cell">
+            <p>Coordinates: <span id="test"></span></p>
+        </div>
         
         <div class="bottomscreen">
             
@@ -1202,6 +1217,10 @@ function removeLoader(){
     var icon = document.querySelector(".icon");
     var map = document.querySelector(".map");
     
+    var wall = document.querySelector(".wall");
+
+    var char1 = document.querySelector(".char1");
+    
     var x = 0;
     var y = 0;
     var held_directions = [];
@@ -1233,12 +1252,29 @@ function removeLoader(){
    if (y > bottomLimit) { y = bottomLimit; }
    */
         
+/*if (animations = on) {
+    document
+}else{
+    document
+}*/
+        //map is 144 pixelsize wide
+        //144 - 64 = 80
+        //block is `1.25 grid cell = 20 pixelsize
+        
+        //72
+        var cx = pixelSize * 64;
+        var cy = pixelSize * 64;
+        
+        var convo = document.getElementById("type");
 
-  if ((x >= 40 && x <= 60 && y >= 40 && y <= 60) 
-      || 
-      (x >= 70 && x <= 100 && y >= 70 && y <= 100))
+        
+        wall.style.transform = `translate3d( ${76*pixelSize+cx}px, ${76*pixelSize+cy}px, 0)`;
+
+  if ((x >= 50 && x <= 70 && y >= 50 && y <= 70) )
+      //|| 
+      //(x >= 70 && x <= 100 && y >= 70 && y <= 100))
      {
-    document.getElementById("wall").style.background = 'red',
+    wall.style.background = 'red',
         speed = 0,
         setTimeout(function() { speed = 1; }, 2000),
         document.getElementById("type").innerHTML = 'Go to next text line...',
@@ -1249,21 +1285,29 @@ function removeLoader(){
      }
     else 
      {
-    document.getElementById("wall").style.background = 'blue';
+    wall.style.background = 'blue';
   }
         
-        
-        if ( x == -50 && y == -50) {
-            document.getElementById("wall").style.background = 'red';
-        }
-        
-        //72
-        var camera_left = pixelSize * 64;
-        var camera_top = pixelSize * 64;
+        char1.style.transform = `translate3d( ${-20*pixelSize+cx}px, ${-20*pixelSize+cy}px, 0)`;
+   
+         if ((x >= -30 && x <= -10 && y >= -15 && y <= 5)){
+        char1.style.background = 'white',
+        speed = 0,
+        setTimeout(function() { speed = 1; }, 2000),
+        convo.innerHTML = 'example line 1',
+        convo.style.animation = 'typing 3s steps(30)',
+        setTimeout(function() {
+        convo.innerHTML = '';
+                              }, 2000);
+     }
+    else 
+     {
+    wall.style.background = 'blue';
+  }
         
         map.style.transform = `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         
-        icon.style.transform = `translate3d( ${x*pixelSize+camera_left}px, ${y*pixelSize+camera_top}px, 0)`;
+        icon.style.transform = `translate3d( ${x*pixelSize+cx}px, ${y*pixelSize+cy}px, 0)`;
     }
     
     const step = () => {
