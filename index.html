@@ -662,7 +662,7 @@
 .dpad {
    position: relative;
    left: calc(var(--grid-cell) * 7);
-   top: calc(var(--grid-cell) * -2.25);
+   top: calc(var(--grid-cell) * -3);
    width: calc(var(--pixel-size) * 37);
    height: calc(var(--pixel-size) * 38);
    background: radial-gradient(rgb(0,0,0,0), #000);
@@ -811,7 +811,7 @@
     
     
     <button class="title" id="post3">Title</button>
-    <p class="intromain" id="post4">Beta Version 1.1.1 &copy; 2021</p>
+    <p class="intromain" style="box-shadow: #000 0 0 calc(var(--pixel-size)*10);opacity:40%;" id="post4">Beta Version 1.1.1 &copy; 2021</p>
     
     <p class="accesspoint" id="post5">Unavailable</p>
     
@@ -918,9 +918,11 @@
         <button class="button4">resize+</button>
         <button class="button5">resize-</button>
         <button class="button3" id="button3">Return</button>
-        <button class="button6" id="button6">Restart</button>
+        <button class="button6" id="button6">Reset</button>
+        <!--
         <button class="button7" id="button7">Change Theme</button>
         <input class="picker" type="color" id="colorme" value="#000000">
+        -->
         <div class="cell">
             <p>Coordinates: <span id="test"></span></p>
         </div>
@@ -1226,6 +1228,8 @@ function removeLoader(){
     var held_directions = [];
 
     var speed = 1;
+    
+    var addNew = true;
 
     
     const placeIcon = () => {
@@ -1266,44 +1270,59 @@ function removeLoader(){
         var cy = pixelSize * 64;
         
         var convo = document.getElementById("type");
-
         
         wall.style.transform = `translate3d( ${76*pixelSize+cx}px, ${76*pixelSize+cy}px, 0)`;
 
-  if ((x >= 50 && x <= 70 && y >= 50 && y <= 70) )
+  if (x >= 50 && x <= 80 && y >= 50 && y <= 80)
       //|| 
       //(x >= 70 && x <= 100 && y >= 70 && y <= 100))
      {
     wall.style.background = 'red',
-        speed = 0,
-        setTimeout(function() { speed = 1; }, 2000),
+        speed = 0;
+        if (addNew){
+            addNew=false,
         document.getElementById("type").innerHTML = 'Go to next text line...',
          document.getElementById("type").style.animation = 'typing 3s steps(30)',
-        setTimeout(function() {
-        document.getElementById("type").innerHTML = '';
-                              }, 2000);
+         setTimeout(function() {convo.innerHTML = '';}, 3000),
+         setTimeout(function() {convo.style.animation = 'none';}, 3000);
+        }
+         if (icon.getAttribute("facing") === "up") {
+             //setTimeout(function() {y = y + 1*pixelSize;}, 100);
+             y = 81;
+         } else if (icon.getAttribute("facing") === "down") {
+             //setTimeout(function() {y = y + 1*pixelSize;}, 100);
+             y = 49;
+         } else if (icon.getAttribute("facing") === "left") {
+             //setTimeout(function() {y = y + 1*pixelSize;}, 100);
+             x = 81;
+         } else if (icon.getAttribute("facing") === "right") {
+             //setTimeout(function() {y = y + 1*pixelSize;}, 100);
+             x = 49;
+         }
      }
     else 
      {
+         speed = 1,
     wall.style.background = 'blue';
   }
+        
+        var tester = 0;
+        
         
         char1.style.transform = `translate3d( ${-20*pixelSize+cx}px, ${-20*pixelSize+cy}px, 0)`;
    
          if ((x >= -30 && x <= -10 && y >= -15 && y <= 5)){
         char1.style.background = 'white',
         speed = 0,
-        setTimeout(function() { speed = 1; }, 2000),
-        convo.innerHTML = 'example line 1',
-        convo.style.animation = 'typing 3s steps(30)',
-        setTimeout(function() {
-        convo.innerHTML = '';
-                              }, 2000);
+        setTimeout(function() { speed = 1;}, 2000),
+        document.getElementById("type").style.animation = 'none';
      }
     else 
      {
-    wall.style.background = 'blue';
+    char1.style.background = 'blue';
+         
   }
+        
         
         map.style.transform = `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         
