@@ -84,7 +84,7 @@
     }
     @keyframes darken {
         0% {filter:brightness(1)}
-        50% {filter:brightness(.5)}
+        50% {filter:brightness(.9)}
         100% {filter:brightness(1)}
     }
     .camera .ocean {
@@ -160,16 +160,16 @@
         }
     }
     .icon[walking="true"][facing="right"] .icon_sprite {
-        animation: right 1s steps(4) infinite;
+        animation: right .75s steps(4) infinite;
     }
     .icon[walking="true"][facing="left"] .icon_sprite {
-        animation: left 1s steps(4) infinite;
+        animation: left .75s steps(4) infinite;
     }
     .icon[walking="true"][facing="up"] .icon_sprite {
-        animation: up 1s steps(4) infinite;
+        animation: up .75s steps(4) infinite;
     }
     .icon[walking="true"][facing="down"] .icon_sprite {
-        animation: down 1s steps(4) infinite;
+        animation: down .75s steps(4) infinite;
     }
     .icon[walking="false"][facing="up"] .icon_sprite {
         background-position-x: calc(var(--grid-cell)*-8);
@@ -637,6 +637,12 @@
         height: calc(var(--grid-cell)*1.25);
         background: indigo;
     }
+    .water {
+        position: relative;
+        width: calc(var(--grid-cell)*1.5);
+        height: calc(var(--grid-cell)*1.5);
+        background: indigo;
+    }
 </style>
     
 <style>
@@ -838,7 +844,7 @@
         <div class="vinegar"></div>
         </div>
         
-    <div class="camera">
+    <div class="camera" id="camera">
         <!--<div class="topbar">-->
         <!--<div class="timer" id="timer"></div>
         </div>-->
@@ -882,6 +888,8 @@
             <div class="wall" id="wall"></div>
             
             <div class="char1" id="char1"></div>
+            
+            <div class="water" id="water"></div>
             
         </div>
     </div>
@@ -1161,6 +1169,7 @@ $(window).on('load', () => {
         }, 1000);
         
         document.getElementById("daynightcycle").style.animation="cycle 30s ease infinite";
+        document.getElementById("camera").style.animation= "darken 30s ease infinite";
         document.getElementById("glow").style.animation= "glowy 30s ease infinite";
         document.getElementById("vinegar").style.animation= "glowy 30s ease infinite";
         
@@ -1217,9 +1226,12 @@ function removeLoader(){
     
     
     var icon = document.querySelector(".icon");
+    
     var map = document.querySelector(".map");
     
     var wall = document.querySelector(".wall");
+    
+    var water = document.querySelector(".water");
 
     var char1 = document.querySelector(".char1");
     
@@ -1272,6 +1284,9 @@ function removeLoader(){
         var convo = document.getElementById("type");
         
         wall.style.transform = `translate3d( ${76*pixelSize+cx}px, ${76*pixelSize+cy}px, 0)`;
+        
+        water.style.transform = `translate3d( ${0*pixelSize}px, ${-40*pixelSize}px, 0)`;
+        
 
   if (x >= 50 && x <= 80 && y >= 50 && y <= 80)
       //|| 
@@ -1306,7 +1321,18 @@ function removeLoader(){
     wall.style.background = 'blue';
   }
         
-        var tester = 0;
+if (x <= -50 && x >= -80 && y <= -50 && y >= -80)
+      //|| 
+      //(x >= 70 && x <= 100 && y >= 70 && y <= 100))
+     {
+    water.style.background = 'purple',
+        speed = .5;
+     }
+    else 
+     {
+         speed = 1,
+    water.style.background = 'aqua';
+  }
         
         
         char1.style.transform = `translate3d( ${-20*pixelSize+cx}px, ${-20*pixelSize+cy}px, 0)`;
