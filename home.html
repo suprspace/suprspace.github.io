@@ -22,6 +22,8 @@
     background-color:orange;
     color:black;
     text-align:center;
+    padding-top: 20%;
+    padding-bottom: 20%;
 }
 </style>
     
@@ -85,6 +87,7 @@
     
     
     function myfunction(el,d) {
+        detectswipe('swipeme');
         if(+d+ = "u"){
             document.getElementById("swipeme").style.background="red";
            } else if(+d+= "d"){
@@ -98,9 +101,6 @@
            }
     }
     
-    window.setInterval(function() {
-        myfunction();
-    },200);
     
     
     
