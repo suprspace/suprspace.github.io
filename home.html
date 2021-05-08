@@ -85,6 +85,7 @@
     }
     */
     
+    
     function myfunction(el,d) {
         if(direc = "u"){
             document.getElementById("swipeme").style.background="red";
@@ -99,8 +100,12 @@
            }
     }
 
-
     detectswipe('swipeme',myfunction);
+    
+    window.setInterval(function() {
+        myfunction(el,d);
+    },200);
+    
 </script>
     
 </html>
