@@ -17,17 +17,13 @@
     
 <style>
     #swipeme {
-    position: fixed;
-    width: auto;
-    height: auto;
-    margin: 10%;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background:orange;
+    width:100%;
+    height:100%;
+    background-color:orange;
     color:black;
     text-align:center;
+    padding-top:20%;
+    padding-bottom:20%;
 }
 </style>
     
@@ -45,9 +41,9 @@
       swipe_det.eX = 0;
       swipe_det.eY = 0;
       var min_x = 20;  //min x swipe for horizontal swipe
-      var max_x = 50;  //max x difference for vertical swipe
+      var max_x = 40;  //max x difference for vertical swipe
       var min_y = 20;  //min y swipe for vertical swipe
-      var max_y = 50;  //max y difference for horizontal swipe
+      var max_y = 40;  //max y difference for horizontal swipe
       var direc = "";
       ele = document.getElementById(el);
       ele.addEventListener('touchstart',function(e){
@@ -86,22 +82,22 @@
     }
     */
     
+    detectswipe('swipeme',myfunction);
+    
     
     function myfunction(el,d) {
-        if(direc == "u"){
+        if(direc = "u"){
             document.getElementById("swipeme").style.background="red";
-           } else if(direc == "d"){
+           } else if(direc = "d"){
             document.getElementById("swipeme").style.background="blue";
-           } else if(direc == "l"){
+           } else if(direc = "l"){
             document.getElementById("swipeme").style.background="green";
-           } else if(direc == "r"){
+           } else if(direc = "r"){
             document.getElementById("swipeme").style.background="purple";
            } else {
             document.getElementById("swipeme").style.background="yellow";
            }
     }
-
-    detectswipe('swipeme',myfunction);
     
     window.setInterval(function() {
         myfunction(el,d);
