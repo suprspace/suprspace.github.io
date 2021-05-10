@@ -67,7 +67,6 @@
         border: 10px solid red;
         z-index: 5;
         pointer-events: none;
-        overflow: hidden;
     }
     
     .grid {
@@ -87,10 +86,17 @@
         border: solid #000;
         border-width: calc(var(--pixel-size)*.1);
     }
+    .main {
+        display: visible;
+    }
     
 </style>
-    
+   
 <body>
+
+    
+    <div class="main">
+    
     <div id='swipeme'>
     swipe me
 </div>
@@ -128,8 +134,11 @@
     </div>
         
     </div>
+        
+    </div>
 
 </body>
+    
     
 <script>
     
