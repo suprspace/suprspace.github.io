@@ -197,6 +197,8 @@
     
     */
     
+    var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
+    
     var map = document.getElementById("grid");
     
     function myfunction(el,d) {
@@ -204,17 +206,20 @@
         
         if (d == "d")
         {document.getElementById("swipeme").style.background = "red",
-            map.style.transform = "translate3d(0, calc(var(--grid-cell)*5), 0)";
+            y=y-10;
         } else if (d == "u")
         {document.getElementById("swipeme").style.background = "blue",
-            map.style.transform = "translate3d(0, calc(var(--grid-cell)*-5), 0)";
+            y=y+10;
         } else if (d == "r")
         {document.getElementById("swipeme").style.background = "green",
-            map.style.transform = "translate3d(calc(var(--grid-cell)*5), 0, 0)";
+            x=x+10;
         } else
         {document.getElementById("swipeme").style.background = "yellow",
-            map.style.transform = "translate3d(calc(var(--grid-cell)*-5), 0, 0)";
+            x=x-10;
         }
+        
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
     }
     
     
