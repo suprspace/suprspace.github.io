@@ -204,13 +204,13 @@
         
         if (d == "d")
         {document.getElementById("swipeme").style.background = "red",
-            map.style.transform = "translateY(calc(var(--grid-cell)*5))";
+            map.style.transform = "translate3d(0, calc(var(--grid-cell)*5), 0)";
         } else if (d == "u")
         {document.getElementById("swipeme").style.background = "blue",
-            map.style.transform = "translateY(calc(var(--grid-cell)*-5))";
+            map.style.transform = "translate3d(0, calc(var(--grid-cell)*-5), 0)";
         } else if (d == "r")
         {document.getElementById("swipeme").style.background = "green",
-            map.style.transform = "translateX(calc(var(--grid-cell)*5))";
+            map.style.transform = "translate3d(0, calc(var(--grid-cell)*5), 0)";
         } else
         {document.getElementById("swipeme").style.background = "yellow",
             map.style.transform = "translateX(calc(var(--grid-cell)*-5))";
