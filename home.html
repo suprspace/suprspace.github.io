@@ -78,9 +78,9 @@
         display: grid;
         width: calc(var(--grid-cell)*50);
         height: calc(var(--grid-cell)*50);
-        transform: translate(calc(var(--grid-cell)*-20), calc(var(--grid-cell)*-20));
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         color: transparent;
+        transform: translate(calc(var(--grid-cell)*-20), calc(var(--grid-cell)*-20));
     }
     .square {
         background-image: url("dungeon.png");
@@ -206,16 +206,16 @@
         
         if (d == "d")
         {document.getElementById("swipeme").style.background = "red",
-            y=y-100;
+            y=y-160;
         } else if (d == "u")
         {document.getElementById("swipeme").style.background = "blue",
-            y=y+100;
+            y=y+160;
         } else if (d == "r")
         {document.getElementById("swipeme").style.background = "green",
-            x=x-100;
+            x=x-160;
         } else
         {document.getElementById("swipeme").style.background = "yellow",
-            x=x+100;
+            x=x+160;
         }
         
         map.style.transform =
