@@ -92,7 +92,25 @@
     .main {
         display: visible;
     }
-    
+    .icon {
+        position: absolute;
+        transform: translate(calc(var(--grid-cell)*4.5), calc(var(--grid-cell)*4.5));
+        z-index: 10;
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        background-image: url("icon.png");
+        background-size: 100%;
+    }
+    .shadow {
+        position: absolute;
+        transform: translate(calc(var(--grid-cell)*4), calc(var(--grid-cell)*4));
+        z-index: 9;
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*2);
+        background-image: url("requiem.png");
+        background-size: 100%;
+        opacity: 80%;
+    }
 </style>
    
 <body>
@@ -107,6 +125,10 @@
     <div class="lens">
     
     <div class="camera">
+        
+        <div class="icon"></div>
+        <div class="shadow"></div>
+        
     <div class="grid" id="grid">
         <div class="square">hey</div>
         <div class="square">hey</div>
