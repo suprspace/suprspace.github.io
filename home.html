@@ -221,7 +221,7 @@
         transform: translate(calc(var(--grid-cell)*-20), calc(var(--grid-cell)*-20));
         
         map.style.transform =
-        `translate3d( ${-x*pixelSize+(calc(var(--grid-cell)*-20))}px, ${-y*pixelSize+(calc(var(--grid-cell)*-20))}px, 0)`;
+        `translate3d( ${-x*pixelSize-320}px, ${-y*pixelSize-320}px, 0)`;
         map.style.transition = "transform 1s";
     }
     
