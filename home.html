@@ -16,28 +16,129 @@
 </head>
     
 <style>
-#swipeme {
-    position: fixed;
-    width: auto;
-    height: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background:orange;
-    color:black;
-    text-align:center;
-    margin: 10%;
+    :root {
+        --pixel-size: 5px;
+        --grid-cell: calc(var(--pixel-size)*16);
+    }
+    @media only screen and (min-width: 900px) {
+        .dpad {
+            display: none;
+        }
+        .bottomscreen {
+            top: calc(var(--grid-cell) * -4);
+        }
+    }
+    @media (max-width: 900px) {
+        :root {
+            --pixel-size: 4px;
+        }
+    }
+    @media (max-width: 700px) {
+        :root {
+            --pixel-size: 3px;
+        }
+    }
+    #swipeme {
+        position: fixed;
+        width: auto;
+        height: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background:orange;
+        color:black;
+        text-align:center;
+        margin: 10%;
+        opacity: 10%;
 }
+    body {
+        image-rendering: pixelated;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    camera {
+        background-image: url(dungeon.png);
+        pointer-events: none;
+    }
+    
+    .lens {
+        position: relative;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        border: 10px solid red;
+        z-index: 5;
+        pointer-events: none;
+        overflow: hidden;
+    }
+    
+    .grid {
+        position: relative;
+        z-index: 4;
+        display: grid;
+        width: calc(var(--grid-cell)*50);
+        height: calc(var(--grid-cell)*50);
+        transform: translate(calc(var(--grid-cell)*-20), calc(var(--grid-cell)*-20));
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        color: transparent;
+    }
+    .square {
+        background-image: url("dungeon.png");
+        background-size: 100%;
+        aspect-ratio: 1;
+        border: solid #000;
+        border-width: calc(var(--pixel-size)*.1);
+    }
+    
 </style>
     
 <body>
     <div id='swipeme'>
     swipe me
 </div>
+    
+    <div class="lens">
+    
+    <div class="camera">
+    <div class="grid">
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+    </div>
+    </div>
+        
+    </div>
+
 </body>
     
 <script>
+    
+    var x = 0;
+    var y = 0;
+    
     function detectswipe(el,func) {
       swipe_det = new Object();
       swipe_det.sX = 0;
@@ -90,9 +191,9 @@
     function myfunction(el,d) {
         //alert("you swiped on element with id '"+el+"' to "+d+" direction");
         
-        if (d == "d") {document.getElementById("swipeme").style.background = "red";} else if (d == "u") {document.getElementById("swipeme").style.background = "blue";}
-        else if (d == "r") {document.getElementById("swipeme").style.background = "green";} else {
-            document.getElementById("swipeme").style.background = "yellow";}
+        if (d == "d") {document.getElementById("swipeme").style.background = "red", y=y-1;} else if (d == "u") {document.getElementById("swipeme").style.background = "blue", y=y+1;}
+        else if (d == "r") {document.getElementById("swipeme").style.background = "green", x=x+1;} else {
+            document.getElementById("swipeme").style.background = "yellow", x=x-1;}
     }
     
     
