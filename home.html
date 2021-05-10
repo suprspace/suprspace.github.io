@@ -88,10 +88,10 @@
     */
     
     function myfunction(el,d) {
+        alert("you swiped on element with id '"+el+"' to "+d+" direction");
         if (d = "d") {document.getElementById("swipeme").style.background = "red";} else if (d = "u") {document.getElementById("swipeme").style.background = "blue";}
         else if (d = "r") {document.getElementById("swipeme").style.background = "green";} else {
             document.getElementById("swipeme").style.background = "yellow";}
-        alert("you swiped on element with id '"+el+"' to "+d+" direction");
     }
     
     
