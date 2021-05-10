@@ -59,7 +59,6 @@
         justify-content: center;
     }
     camera {
-        background-image: url(dungeon.png);
         pointer-events: none;
     }
     
@@ -101,7 +100,7 @@
     <div class="lens">
     
     <div class="camera">
-    <div class="grid">
+    <div class="grid" id="grid">
         <div class="square">hey</div>
         <div class="square">hey</div>
         <div class="square">hey</div>
@@ -188,13 +187,26 @@
     
     */
     
+    var map = document.getElementById("grid");
+    
     function myfunction(el,d) {
         //alert("you swiped on element with id '"+el+"' to "+d+" direction");
         
-        if (d == "d") {document.getElementById("swipeme").style.background = "red", y=y-1;} else if (d == "u") {document.getElementById("swipeme").style.background = "blue", y=y+1;}
-        else if (d == "r") {document.getElementById("swipeme").style.background = "green", x=x+1;} else {
-            document.getElementById("swipeme").style.background = "yellow", x=x-1;}
+        if (d == "d")
+        {document.getElementById("swipeme").style.background = "red",
+            map.style.transform = "translateY(calc(var(--grid-cell)*-1))";
+        } else if (d == "u")
+        {document.getElementById("swipeme").style.background = "blue",
+            y=y+1;
+        } else if (d == "r")
+        {document.getElementById("swipeme").style.background = "green",
+            x=x+1;
+        } else
+        {document.getElementById("swipeme").style.background = "yellow",
+            x=x-1;
+        }
     }
+    
     
     
     detectswipe('swipeme',myfunction);
