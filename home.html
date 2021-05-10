@@ -111,6 +111,13 @@
         background-size: 100%;
         opacity: 70%;
     }
+    .cords {
+        z-index: 11;
+        color: #fff;
+        position: fixed;
+        background: black;
+        font-size: 2em;
+    }
 </style>
    
 <body>
@@ -121,6 +128,8 @@
     <div id='swipeme'>
     swipe me
 </div>
+        
+    <div class="cords" id="cords">hey</div>
     
     <div class="lens">
     
@@ -226,7 +235,6 @@
     
     function myfunction(el,d) {
         //alert("you swiped on element with id '"+el+"' to "+d+" direction");
-        
         if (d == "d")
         {document.getElementById("swipeme").style.background = "red",
             y=y-160;
@@ -252,6 +260,9 @@
     
     detectswipe('swipeme',myfunction);
     
+    window.setInterval(function() {
+        document.getElementById("cords").innerHTML = "x: " +x+ " y: " +y;
+    },200);
     
 </script>
     
