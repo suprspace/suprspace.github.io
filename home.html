@@ -81,7 +81,6 @@
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         color: transparent;
         transform: translate(calc(var(--grid-cell)*-20), calc(var(--grid-cell)*-20));
-        animation: .5s ease infinite;
     }
     .square {
         background-image: url("dungeon.png");
@@ -221,6 +220,7 @@
         
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = ".5s ease infinite";
     }
     
     
