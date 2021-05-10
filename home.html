@@ -219,6 +219,11 @@
     
     */
     
+    function wallCheck() {
+        if (x = 0) {
+            return}
+    }
+    
     var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
     
     var map = document.getElementById("grid");
@@ -230,6 +235,7 @@
         {document.getElementById("swipeme").style.background = "red",
             y=y-160;
         } else if (d == "u")
+            wallCheck(),
         {document.getElementById("swipeme").style.background = "blue",
             y=y+160;
         } else if (d == "r")
@@ -240,7 +246,7 @@
             x=x+160;
         }
         
-
+        
         
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
