@@ -80,7 +80,6 @@
         height: calc(var(--grid-cell)*50);
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         color: transparent;
-        transform: translate(calc(var(--grid-cell)*-20), calc(var(--grid-cell)*-20));
         transition: none;
     }
     .square {
@@ -219,8 +218,10 @@
             x=x+160;
         }
         
+        transform: translate(calc(var(--grid-cell)*-20), calc(var(--grid-cell)*-20));
+        
         map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        `translate3d( ${-x*pixelSize+(calc(var(--grid-cell)*-20)}px, ${-y*pixelSize+(calc(var(--grid-cell)*-20)}px, 0)`;
         map.style.transition = "transform 1s";
     }
     
