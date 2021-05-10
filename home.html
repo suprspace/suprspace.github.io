@@ -250,12 +250,23 @@
         }
         
         
-        
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
     }
     
+    if (x < 0) {
+        x = 0;
+    }
+    if (x > 640) {
+        x = 640;
+    }
+    if (y < 0) {
+        y = 0;
+    }
+    if (y > 640) {
+        y = 640;
+    }
     
     
     detectswipe('swipeme',myfunction);
