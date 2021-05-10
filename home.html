@@ -194,16 +194,16 @@
         
         if (d == "d")
         {document.getElementById("swipeme").style.background = "red",
-            map.style.transform = "translateY(calc(var(--grid-cell)*-1))";
+            map.style.transform = "translateY(calc(var(--grid-cell)*10))";
         } else if (d == "u")
         {document.getElementById("swipeme").style.background = "blue",
-            y=y+1;
+            map.style.transform = "translateY(calc(var(--grid-cell)*-10))";
         } else if (d == "r")
         {document.getElementById("swipeme").style.background = "green",
-            x=x+1;
+            map.style.transform = "translateX(calc(var(--grid-cell)*10))";
         } else
         {document.getElementById("swipeme").style.background = "yellow",
-            x=x-1;
+            map.style.transform = "translateX(calc(var(--grid-cell)*-10))";
         }
     }
     
