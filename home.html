@@ -210,10 +210,10 @@
             map.style.transform = "translate3d(0, calc(var(--grid-cell)*-5), 0)";
         } else if (d == "r")
         {document.getElementById("swipeme").style.background = "green",
-            map.style.transform = "translate3d(0, calc(var(--grid-cell)*5), 0)";
+            map.style.transform = "translate3d(calc(var(--grid-cell)*5), 0, 0)";
         } else
         {document.getElementById("swipeme").style.background = "yellow",
-            map.style.transform = "translateX(calc(var(--grid-cell)*-5))";
+            map.style.transform = "translate3d(calc(var(--grid-cell)*-5), 0, 0)";
         }
     }
     
