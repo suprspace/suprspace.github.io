@@ -245,15 +245,6 @@
     swipe me
 </div>
         
-    <div class="dpad" id="dpad">
-        <div class="DemoDirectionUI flex-center">
-            <button class="dpad-button dpad-left"></button>
-            <button class="dpad-button dpad-up"></button>
-            <button class="dpad-button dpad-right"></button>
-            <button class="dpad-button dpad-down"></button>
-        </div>
-    </div>
-        
     <div class="cords" id="cords">hey</div>
     
     <div class="lens">
@@ -294,6 +285,15 @@
         
     </div>
         
+    </div>
+    
+    <div class="dpad" id="dpad">
+        <div class="DemoDirectionUI flex-center">
+            <button class="dpad-button dpad-left"></button>
+            <button class="dpad-button dpad-up"></button>
+            <button class="dpad-button dpad-right"></button>
+            <button class="dpad-button dpad-down"></button>
+        </div>
     </div>
 
 </body>
@@ -421,7 +421,6 @@ $(window).on('load', () => {
     
     function myfunction(el,d) {
         
-    
         //alert("you swiped on element with id '"+el+"' to "+d+" direction");
         if (d == "d")
         {document.getElementById("swipeme").style.background = "red",
@@ -455,7 +454,6 @@ $(window).on('load', () => {
         }
         
         
-        
     if (xcord <= -1) {
         xcord = 0,
         x = 0,
@@ -487,8 +485,6 @@ $(window).on('load', () => {
         },1000);
     }
     
-        
-        
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
