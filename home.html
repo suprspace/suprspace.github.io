@@ -183,7 +183,7 @@
     }
     .resize {
         font-family: boldpixel;
-        font-size: calc(var(--pixel-size)*4);
+        font-size: calc(var(--pixel-size)*3);
         position: fixed;
         color: #fff;
         z-index: 21;
@@ -266,6 +266,21 @@
         100% {
             opacity: 0%;
         }
+    }
+    .textbox {
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: calc(var(--grid-cell)*1);
+        width: calc(var(--grid-cell)*12);
+        height: calc(var(--grid-cell)*5);
+        z-index: 10;
+        color: #fff;
+        border-width: calc(var(--pixel-size)*.3);
+        border: solid #fff;
+        background: rgb(0,0,0,.8);
     }
 </style>
     
@@ -388,7 +403,7 @@
     <div id='swipeme'>
 </div>
         
-    <!-- <div class="cords" id="cords">hey</div> -->
+ <!-- <div class="cords" id="cords">hey</div> -->
     
     <div class="lens">
     
@@ -427,6 +442,10 @@
     </div>
         
     </div>
+        
+        
+        <!-- <div class="textbox" id="textbox"></div> -->
+        
         
     </div>
     
@@ -525,6 +544,9 @@ $(window).on('load', () => {
     $('.dpad-down').click(function() {
         mydown();
     });
+    
+    var msg = document.getElementById("textbox");
+    
     
     var x = 0;
     var y = 0;
@@ -645,6 +667,7 @@ $(window).on('load', () => {
     }
     
     function dash () {
+        col = col+1;
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
@@ -652,6 +675,7 @@ $(window).on('load', () => {
         setTimeout(function() {
             icon.style.animation = "none";
         },1000);
+
     }
     
         map.style.transform =
@@ -664,11 +688,12 @@ $(window).on('load', () => {
     detectswipe('swipeme',myfunction);
     
     window.setInterval(function() {
-        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord;
+        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col;
     },200);
 
+    let col = 0;
     
-</script> <!--dpad-->
+</script> <!--swipes misc-->
     
 <script>
     function myright(el,d) {
@@ -701,6 +726,7 @@ $(window).on('load', () => {
     }
     
     function dash () {
+        col = col+1;
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
@@ -747,6 +773,7 @@ $(window).on('load', () => {
     }
     
     function dash () {
+        col = col+1;
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
@@ -755,7 +782,7 @@ $(window).on('load', () => {
             icon.style.animation = "none";
         },1000);
     }
-       
+
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
@@ -793,6 +820,7 @@ $(window).on('load', () => {
     }
     
     function dash () {
+        col = col + 1;
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
@@ -836,6 +864,7 @@ $(window).on('load', () => {
     }
     
     function dash () {
+        col = col + 1;
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
