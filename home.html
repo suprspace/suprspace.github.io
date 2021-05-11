@@ -35,6 +35,14 @@
             --pixel-size: 2px;
         }
     }
+    @font-face {
+        font-family: "pixel";
+        src: url("/dogica.otf");
+    }
+    @font-face {
+        font-family: "boldpixel";
+        src: url("/dogicabold.otf");
+    }
     .splash {
         position: fixed;
         top: 0;
@@ -42,6 +50,7 @@
         bottom: 0;
         right: 0;
         z-index: 20;
+        background: #000;
     }
     .anim {
         position: fixed;
@@ -51,7 +60,6 @@
         margin: auto;
         bottom: 0;
         left: 0;
-        right: 0;
         animation: hues 10s linear infinite;
         animation-delay: 5s;
     }
@@ -162,7 +170,43 @@
         background: black;
         font-size: 2em;
     }
+    .start {
+        width: calc(var(--grid-cell)*3);
+        height: calc(var(--grid-cell)*2);
+        position: fixed;
+        z-index: 21;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*5);
+        border: none;
+        background: transparent;
+        color: #fff;
+    }
 </style>
+    
+<style>
+    .loader,
+    .loader:after {
+        width: auto;
+        height: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+    }
+    #loading {
+        pointer-events: none;
+        position:absolute;
+        width: auto;
+        height: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color:#000;
+        z-index: 999;
+}
+</style> <!--loader-->
     
 <style>
 .dpad {
@@ -233,17 +277,24 @@
 .dpad {
    user-select:none;
 }
-</style>
+</style> <!--dpad-->
    
 <body>
+    
+    <button class="start" id="start">New Ruin</button>
+    
+    <div class="splash" id="splash">
+    <img class="anim" src="lights/lights0.png"/>
+    <img class="anim" src="lights/lights0.png"/ style="left:calc(var(--grid-cell)*12);">
+    <img class="anim" src="lights/lights0.png"/ style="right:calc(var(--grid-cell)*12);">
+    </div>
     
     <div class="main">
     
     <div id='swipeme'>
-    swipe me
 </div>
         
-    <div class="cords" id="cords">hey</div>
+    <!-- <div class="cords" id="cords">hey</div> -->
     
     <div class="lens">
     
@@ -295,6 +346,13 @@
     </div>
 
 </body>
+    
+<script>
+    $('.start').click(function() {
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("start").style.display = "none";
+    });
+</script>
   
 <script>
 const $element = $('.anim');
@@ -726,6 +784,21 @@ document.querySelector(".dpad-left").addEventListener("mouseover", (e) => handle
 document.querySelector(".dpad-up").addEventListener("mouseover", (e) => handleDpadPress(directions.up));
 document.querySelector(".dpad-right").addEventListener("mouseover", (e) => handleDpadPress(directions.right));
 document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handleDpadPress(directions.down));
+</script>
+    
+    <script>
+$('body').append('<div style="" id="loading"><div class= "post"></div></div>');
+$(window).on('load', function(){
+  setTimeout(removeLoader, 500); //wait for page load PLUS two seconds.
+});
+function removeLoader(){
+    $( "#loading" ).fadeOut(500, function() {
+        $('html, body').css({overflow: 'hidden'});
+      // fadeOut complete. Remove the loading div
+      $('html, body').css({overflow: 'visible'});
+      $( "#loading" ).remove(); //makes page more lightweight 
+  });  
+}
 </script>
     
 </html>
