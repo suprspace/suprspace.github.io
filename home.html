@@ -122,10 +122,10 @@
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         color: transparent;
         transition: none;
+        background-image: url("level1.png");
+        background-size: 100%;
     }
     .square {
-        background-image: url("dungeon.png");
-        background-size: 100%;
         aspect-ratio: 1;
         border: solid #000;
         border-width: calc(var(--pixel-size)*.1);
@@ -269,18 +269,33 @@
     }
     .textbox {
         font-family: boldpixel;
-        font-size: calc(var(--pixel-size)*3);
+        font-size: calc(var(--pixel-size)*4);
         position: fixed;
         left: 50%;
         transform: translateX(-50%);
-        bottom: calc(var(--grid-cell)*1);
-        width: calc(var(--grid-cell)*12);
+        bottom: calc(var(--grid-cell)*-2);
+        width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*5);
         z-index: 10;
         color: #fff;
         border-width: calc(var(--pixel-size)*.3);
         border: solid #fff;
         background: rgb(0,0,0,.8);
+        opacity: 0%;
+        transition: .15s ease;
+    }
+    #type1, #type2, #type3 {
+        white-space: nowrap;
+        overflow: hidden;
+        padding: calc(var(--pixel-size)*8);
+    }
+    @keyframes typing {
+        0% {
+            width: 0%;
+        }
+        100% {
+            width: 100%;
+        }
     }
 </style>
     
@@ -403,7 +418,7 @@
     <div id='swipeme'>
 </div>
         
- <!-- <div class="cords" id="cords">hey</div> -->
+ <div class="cords" id="cords">hey</div> 
     
     <div class="lens">
     
@@ -444,7 +459,11 @@
     </div>
         
         
-        <!-- <div class="textbox" id="textbox"></div> -->
+    <div class="textbox" id="textbox">
+        <p id="type1"></p>
+        <p id="type2"></p>
+        <p id="type3"></p>
+        </div> 
         
         
     </div>
@@ -528,6 +547,32 @@ $(window).on('load', () => {
 </script> <!--main menu-->
     
 <script>
+
+    
+    var oncetest = 0;
+    
+    window.setInterval(function() {
+        if (col >= 1) {
+            if (oncetest == 0) {
+            msg.style.bottom = "calc(var(--grid-cell)*1)";
+            msg.style.opacity = "100%";
+            msg.style.width = "calc(var(--grid-cell)*12)";
+            type1.style.animation = "typing steps(25) 1s forwards";
+            type1.innerHTML = "This side appears to be sealed off...";
+                setTimeout(function() {
+            col = 0;
+            type1.innerHTML = "";
+            type1.style.animation = "none";
+                    
+            msg.style.bottom = "calc(var(--grid-cell)*-2)";
+            msg.style.opacity = "0%";
+            msg.style.width = "calc(var(--grid-cell)*10)";
+                oncetest = oncetest + 1;
+                },3000);
+        } else {
+            return;
+        }}
+    },2000);
     
     $('.dpad-right').click(function() {
         myright();
@@ -546,6 +591,9 @@ $(window).on('load', () => {
     });
     
     var msg = document.getElementById("textbox");
+    var type1 = document.getElementById("type1");
+    var type2 = document.getElementById("type2");
+    var type3 = document.getElementById("type3");
     
     
     var x = 0;
@@ -595,13 +643,6 @@ $(window).on('load', () => {
         direc = "";
       },false);  
     }
-
-    /*
-    function myfunction(el,d) {
-      alert("you swiped on element with id '"+el+"' to "+d+" direction");
-    }
-    
-    */
 
     let icon = document.getElementById("icon");
     
