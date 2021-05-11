@@ -259,12 +259,7 @@
         }
         
         
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
-    }
-    
-    if (xcord <= -1) {
+            if (xcord <= -1) {
         xcord = 0,
         x = 0,
         dash();
@@ -290,6 +285,13 @@
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
     }
+        
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
+    }
+    
+
     
     
     detectswipe('swipeme',myfunction);
