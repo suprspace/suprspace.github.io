@@ -244,7 +244,6 @@
         if (d == "d")
         {document.getElementById("swipeme").style.background = "red",
             ycord = ycord-1,
-            icon.style.backgroundImage = url("back.png"),
             y=y-160;
         } else if (d == "u")
         {document.getElementById("swipeme").style.background = "blue",
@@ -261,7 +260,7 @@
         }
         
         
-        if (xcord <= -1) {
+    if (xcord <= -1) {
         xcord = 0,
         x = 0,
         dash();
@@ -292,9 +291,7 @@
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
     }
-    
 
-    
     
     detectswipe('swipeme',myfunction);
     
