@@ -233,7 +233,7 @@
     
     */
 
-    icon = document.getElementById("icon").style.background;
+    icon = document.getElementById("icon");
     
     var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
     
@@ -244,36 +244,36 @@
         if (d == "d")
         {document.getElementById("swipeme").style.background = "red",
             ycord = ycord-1,
-            icon = url("back.png"),
+            icon.style.background = url("back.png"),
+            y=y-160,
             setTimeout(function() {
-            icon = url("icon.png");
-            },500),
-            y=y-160;
+            icon.style.background = url("icon.png");
+            },500);
         } else if (d == "u")
         {document.getElementById("swipeme").style.background = "blue",
             ycord = ycord+1,
-            icon = url("icon.png"),
+            icon.style.background = url("icon.png"),
             y=y+160;
         } else if (d == "r")
         {document.getElementById("swipeme").style.background = "green",
             xcord = xcord-1,
-            icon = url("left.png"),
+            icon.style.background = url("left.png"),
+            x=x-160,
             setTimeout(function() {
-            icon = url("icon.png");
-            },500),
-            x=x-160;
+            icon.style.background = url("icon.png");
+            },500);
         } else
         {document.getElementById("swipeme").style.background = "yellow",
             xcord = xcord+1,
-            icon = url("right.png"),
+            icon.style.background = url("right.png"),
+            x=x+160,
             setTimeout(function() {
-            icon = url("icon.png");
-            },500),
-            x=x+160;
+            icon.style.background = url("icon.png");
+            },500);
         }
         
         
-            if (xcord <= -1) {
+        if (xcord <= -1) {
         xcord = 0,
         x = 0,
         dash();
