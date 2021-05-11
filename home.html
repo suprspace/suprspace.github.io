@@ -265,20 +265,30 @@
     }
     
     if (xcord <= -1) {
+        dash(),
         xcord = 0,
         x = 0;
     }
     if (xcord >= 5) {
+        dash(),
         xcord = 4,
         x = 640;
     }
     if (ycord <= -1) {
+        dash(),
         ycord = 0,
         y = 0;
     }
     if (ycord >= 5) {
+        dash(),
         ycord = 4,
         y = 640;
+    }
+    
+    function dash () {
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
     }
     
     
