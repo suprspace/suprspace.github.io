@@ -169,8 +169,6 @@
    position: fixed;
    margin: auto;
    z-index: 0;
-   width: calc(var(--grid-cell) * 10);
-   height: calc(var(--grid-cell) * 10);
    background: radial-gradient(rgb(0,0,0,0), red);
 }
 .dpad-button {
@@ -186,7 +184,7 @@
 
 .dpad-up {
     position: absolute;
-    top: calc(var(--pixel-size) * -12);
+    top: calc(var(--pixel-size) * -100);
     left: 50%;
     width: calc(var(--pixel-size) * 12);
     height: calc(var(--pixel-size) * 12);
@@ -198,7 +196,7 @@
 }
 .dpad-down {
     position: absolute;
-    bottom: calc(var(--pixel-size) * -12);
+    bottom: calc(var(--pixel-size) * -100);
     left: 50%;
     width: calc(var(--pixel-size) * 12);
     height: calc(var(--pixel-size) * 12);
@@ -211,7 +209,7 @@
 .dpad-left {
     position: absolute;
     top: 50%;
-    left: calc(var(--pixel-size) * -12);
+    left: calc(var(--pixel-size) * -100);
     width: calc(var(--pixel-size) * 12);
     height: calc(var(--pixel-size) * 12);
     background: url("lb.png") no-repeat;
@@ -223,7 +221,7 @@
 .dpad-right {
     position: absolute;
     top: 50%;
-    right: calc(var(--pixel-size) * -12);
+    right: calc(var(--pixel-size) * -100);
     width: calc(var(--pixel-size) * 12);
     height: calc(var(--pixel-size) * 12);
     background: url("rb.png") no-repeat;
