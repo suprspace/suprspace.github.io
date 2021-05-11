@@ -105,13 +105,13 @@
     }
     @keyframes collision {
         0% {
-            transform: translate3d((calc(var(--pixel-size)*-2)), 0, 0);
+            left: (calc(var(--pixel-size)*-2));
         }
         50% {
-            transform: translate3d((calc(var(--pixel-size)*2)), 0, 0);
+            left: (calc(var(--pixel-size)*3));
         }
         100% {
-            transform: translate3d(0, 0, 0);
+            left: 0;
         }
     }
     .shadow {
