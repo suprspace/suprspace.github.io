@@ -35,6 +35,19 @@
             --pixel-size: 2px;
         }
     }
+    .splash {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+    .anim {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+    }
     #swipeme {
         position: fixed;
         width: auto;
@@ -47,7 +60,7 @@
         color:black;
         text-align:center;
         margin: 10%;
-        opacity: 10%;
+        opacity: 0%;
 }
     body {
         touch-action: manipulation;
@@ -135,6 +148,9 @@
    
 <body>
 
+    <div class="splash">
+    <div class="anim"></div>
+    </div>
     
     <div class="main">
     
@@ -185,7 +201,47 @@
     </div>
 
 </body>
-    
+  
+<script>
+const $element = $('.anim');
+const imagePath = '/lights';
+const totalFrames = 39;
+const animationDuration = 2000;
+const timePerFrame = animationDuration / totalFrames;
+let timeWhenLastUpdate;
+let timeFromLastUpdate;
+let frameNumber = 0;
+
+function step2(startTime) {
+
+  if (!timeWhenLastUpdate) timeWhenLastUpdate = startTime;
+  timeFromLastUpdate = startTime - timeWhenLastUpdate;
+
+  if (timeFromLastUpdate > timePerFrame) {
+
+    $element.attr('src', imagePath + `/lights${frameNumber}.png`);
+    timeWhenLastUpdate = startTime;
+
+    if (frameNumber >= totalFrames) {
+      frameNumber = 1;
+    } else {
+      frameNumber = frameNumber + 1;
+    }        
+  }
+  
+  requestAnimationFrame(step2);
+}
+
+$(document).ready(() => {
+  for (var i = 1; i < totalFrames + 1; i++) {
+    $('body').append(`<div id="preload-image-${i}" style="background-image: url('${imagePath}/lights${i}.png');"></div>`);
+  }
+});
+
+$(window).on('load', () => {
+  requestAnimationFrame(step2);
+});
+</script>
     
 <script>
     
@@ -309,7 +365,7 @@
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
-        icon.style.animation = "collision linear .2s 4 forwards";
+        icon.style.animation = "collision linear .2s steps(5) 3 forwards";
         setTimeout(function() {
             icon.style.animation = "none";
         },1000);
