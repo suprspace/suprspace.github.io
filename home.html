@@ -99,7 +99,7 @@
         position: relative;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*10);
-        border: 10px solid red;
+        border: none;
         z-index: 5;
         pointer-events: none;
         overflow: hidden;
@@ -163,16 +163,96 @@
         font-size: 2em;
     }
 </style>
+    
+<style>
+.dpad {
+   position: fixed;
+   margin: auto;
+   z-index: 99;
+   width: calc(var(--grid-cell) * 10);
+   height: calc(var(--grid-cell) * 10);
+   background: radial-gradient(rgb(0,0,0,0), red);
+}
+.dpad-button {
+   appearance:none;
+   outline:0;
+   border:0;
+   background:transparent;
+   padding:0;
+   cursor:pointer;
+   opacity: 15%;
+}
+.dpad-button.pressed { opacity: 90%; }
+
+.dpad-up {
+    position: absolute;
+    top: calc(var(--pixel-size) * -12);
+    left: 50%;
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+    background: url("ub.png") no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
+    transform: translateX(-50%);
+}
+.dpad-down {
+    position: absolute;
+    bottom: calc(var(--pixel-size) * -12);
+    left: 50%;
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+    background: url("db.png") no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
+    transform: translateX(-50%);
+}
+.dpad-left {
+    position: absolute;
+    top: 50%;
+    left: calc(var(--pixel-size) * -12);
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+    background: url("lb.png") no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
+    transform: translateY(-50%);
+}
+.dpad-right {
+    position: absolute;
+    top: 50%;
+    right: calc(var(--pixel-size) * -12);
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+    background: url("rb.png") no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
+    transform: translateY(-50%);
+}
+.dpad {
+   user-select:none;
+}
+</style>
    
 <body>
-
-    
     
     <div class="main">
     
     <div id='swipeme'>
     swipe me
 </div>
+        
+    <div class="dpad" id="dpad">
+        <div class="DemoDirectionUI flex-center">
+            <button class="dpad-button dpad-left"></button>
+            <button class="dpad-button dpad-up"></button>
+            <button class="dpad-button dpad-right"></button>
+            <button class="dpad-button dpad-down"></button>
+        </div>
+    </div>
         
     <div class="cords" id="cords">hey</div>
     
@@ -261,6 +341,22 @@ $(window).on('load', () => {
     
 <script>
     
+    $('.dpad-right').click(function() {
+        myright();
+    });
+    
+    $('.dpad-left').click(function() {
+        myleft();
+    });
+    
+    $('.dpad-up').click(function() {
+        myup();
+    });
+    
+    $('.dpad-down').click(function() {
+        mydown();
+    });
+    
     var x = 0;
     var y = 0;
     
@@ -321,8 +417,11 @@ $(window).on('load', () => {
     var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
     
     var map = document.getElementById("grid");
+        
     
     function myfunction(el,d) {
+        
+    
         //alert("you swiped on element with id '"+el+"' to "+d+" direction");
         if (d == "d")
         {document.getElementById("swipeme").style.background = "red",
@@ -356,6 +455,7 @@ $(window).on('load', () => {
         }
         
         
+        
     if (xcord <= -1) {
         xcord = 0,
         x = 0,
@@ -386,10 +486,13 @@ $(window).on('load', () => {
             icon.style.animation = "none";
         },1000);
     }
+    
+        
         
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
+        
     }
 
     
@@ -398,7 +501,237 @@ $(window).on('load', () => {
     window.setInterval(function() {
         document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord;
     },200);
+
     
+</script>
+    
+<script>
+    function myright(el,d) {
+            xcord = xcord+1,
+            icon.style.backgroundImage = "url('right.png')",
+            x=x+160,
+            setTimeout(function() {
+            icon.style.backgroundImage = "url('icon.png')";
+        },500);
+        
+    if (xcord <= -1) {
+        xcord = 0,
+        x = 0,
+        dash();
+    }
+    if (xcord >= 5) {
+        xcord = 4,
+        x = 640,
+        dash();
+    }
+    if (ycord <= -1) {
+        ycord = 0,
+        y = 0,
+        dash();
+    }
+    if (ycord >= 5) {
+        ycord = 4,
+        y = 640,
+        dash();
+    }
+    
+    function dash () {
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
+        icon.style.animation = "collision steps(4) .2s 3 forwards";
+        setTimeout(function() {
+            icon.style.animation = "none";
+        },1000);
+    }
+       
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
+        
+    }
+</script>
+<script>
+    function myleft(el,d) {
+            xcord = xcord-1,
+            icon.style.backgroundImage = "url('left.png')",
+            x=x-160,
+            setTimeout(function() {
+            icon.style.backgroundImage = "url('icon.png')";
+        },500);
+        
+    if (xcord <= -1) {
+        xcord = 0,
+        x = 0,
+        dash();
+    }
+    if (xcord >= 5) {
+        xcord = 4,
+        x = 640,
+        dash();
+    }
+    if (ycord <= -1) {
+        ycord = 0,
+        y = 0,
+        dash();
+    }
+    if (ycord >= 5) {
+        ycord = 4,
+        y = 640,
+        dash();
+    }
+    
+    function dash () {
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
+        icon.style.animation = "collision steps(4) .2s 3 forwards";
+        setTimeout(function() {
+            icon.style.animation = "none";
+        },1000);
+    }
+       
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
+        
+    }
+</script>
+<script>
+    function myup(el,d) {
+            ycord = ycord-1,
+            icon.style.backgroundImage = "url('back.png')",
+            y=y-160,
+            setTimeout(function() {
+            icon.style.backgroundImage = "url('icon.png')";
+        },500);
+        
+    if (xcord <= -1) {
+        xcord = 0,
+        x = 0,
+        dash();
+    }
+    if (xcord >= 5) {
+        xcord = 4,
+        x = 640,
+        dash();
+    }
+    if (ycord <= -1) {
+        ycord = 0,
+        y = 0,
+        dash();
+    }
+    if (ycord >= 5) {
+        ycord = 4,
+        y = 640,
+        dash();
+    }
+    
+    function dash () {
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
+        icon.style.animation = "collision steps(4) .2s 3 forwards";
+        setTimeout(function() {
+            icon.style.animation = "none";
+        },1000);
+    }
+       
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
+        
+    }
+</script>
+<script>
+    function mydown(el,d) {
+            ycord = ycord+1,
+            icon.style.backgroundImage = "url('icon.png')",
+            y=y+160;
+        
+    if (xcord <= -1) {
+        xcord = 0,
+        x = 0,
+        dash();
+    }
+    if (xcord >= 5) {
+        xcord = 4,
+        x = 640,
+        dash();
+    }
+    if (ycord <= -1) {
+        ycord = 0,
+        y = 0,
+        dash();
+    }
+    if (ycord >= 5) {
+        ycord = 4,
+        y = 640,
+        dash();
+    }
+    
+    function dash () {
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
+        icon.style.animation = "collision steps(4) .2s 3 forwards";
+        setTimeout(function() {
+            icon.style.animation = "none";
+        },1000);
+    }
+       
+        map.style.transform =
+        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        map.style.transition = "transform .2s ease";
+        
+    }
+</script>
+
+<script>
+    
+    /* BONUS! Dpad functionality for mouse and touch */
+var isPressed = false;
+const removePressedAll = () => {
+   document.querySelectorAll(".dpad-button").forEach(d => {
+      d.classList.remove("pressed")
+   })
+}
+document.body.addEventListener("mousedown", () => {
+   //console.log('mouse is down')
+   isPressed = true;
+})
+document.body.addEventListener("mouseup", () => {
+   //console.log('mouse is up')
+   isPressed = false;
+   held_directions = [];
+   removePressedAll();
+})
+const handleDpadPress = (direction, click) => {   
+   if (click) {
+      isPressed = true;
+   }
+   held_directions = (isPressed) ? [direction] : []
+   
+   if (isPressed) {
+      removePressedAll();
+      document.querySelector(".dpad-"+direction).classList.add("pressed");
+   }
+}
+//Bind a ton of events for the dpad
+document.querySelector(".dpad-left").addEventListener("touchstart", (e) => handleDpadPress(directions.left, true));
+document.querySelector(".dpad-up").addEventListener("touchstart", (e) => handleDpadPress(directions.up, true));
+document.querySelector(".dpad-right").addEventListener("touchstart", (e) => handleDpadPress(directions.right, true));
+document.querySelector(".dpad-down").addEventListener("touchstart", (e) => handleDpadPress(directions.down, true));
+
+document.querySelector(".dpad-left").addEventListener("mousedown", (e) => handleDpadPress(directions.left, true));
+document.querySelector(".dpad-up").addEventListener("mousedown", (e) => handleDpadPress(directions.up, true));
+document.querySelector(".dpad-right").addEventListener("mousedown", (e) => handleDpadPress(directions.right, true));
+document.querySelector(".dpad-down").addEventListener("mousedown", (e) => handleDpadPress(directions.down, true));
+
+document.querySelector(".dpad-left").addEventListener("mouseover", (e) => handleDpadPress(directions.left));
+document.querySelector(".dpad-up").addEventListener("mouseover", (e) => handleDpadPress(directions.up));
+document.querySelector(".dpad-right").addEventListener("mouseover", (e) => handleDpadPress(directions.right));
+document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handleDpadPress(directions.down));
 </script>
     
 </html>
