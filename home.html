@@ -245,31 +245,19 @@
         {document.getElementById("swipeme").style.background = "red",
             ycord = ycord-1,
             icon.style.backgroundImage = url("back.png"),
-            y=y-160,
-            setTimeout(function() {
-            icon.style.backgroundImage = url("icon.png");
-            },500);
+            y=y-160;
         } else if (d == "u")
         {document.getElementById("swipeme").style.background = "blue",
             ycord = ycord+1,
-            icon.style.backgroundImage = url("icon.png"),
             y=y+160;
         } else if (d == "r")
         {document.getElementById("swipeme").style.background = "green",
             xcord = xcord-1,
-            icon.style.backgroundImage = url("left.png"),
-            x=x-160,
-            setTimeout(function() {
-            icon.style.backgroundImage = url("icon.png");
-            },500);
+            x=x-160;
         } else
         {document.getElementById("swipeme").style.background = "yellow",
             xcord = xcord+1,
-            icon.style.backgroundImage = url("right.png"),
-            x=x+160,
-            setTimeout(function() {
-            icon.style.backgroundImage = url("icon.png");
-            },500);
+            x=x+160;
         }
         
         
