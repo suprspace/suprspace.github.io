@@ -309,7 +309,10 @@
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
-        icon.style.animation = "collision linear .3s 2 forwards";
+        icon.style.animation = "collision linear .2s 4 forwards";
+        setTimeout(function() {
+            icon.style.animation = "none";
+        },1000);
     }
         
         map.style.transform =
