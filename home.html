@@ -381,7 +381,7 @@ $(window).on('load', () => {
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
-        icon.style.animation = "collision linear .2s steps(5) 3 forwards";
+        icon.style.animation = "collision steps(4) .2s 3 forwards";
         setTimeout(function() {
             icon.style.animation = "none";
         },1000);
