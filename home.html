@@ -103,6 +103,17 @@
         background-image: url("icon.png");
         background-size: 100%;
     }
+    @keyframes collision {
+        0% {
+            transform: translate3d((calc(var(--pixel-size)*-2)), 0, 0);
+        }
+        50% {
+            transform: translate3d((calc(var(--pixel-size)*2)), 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
     .shadow {
         position: absolute;
         transform: translate(calc(var(--grid-cell)*4), calc(var(--grid-cell)*4));
@@ -298,6 +309,7 @@
         map.style.transform =
         `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
         map.style.transition = "transform .2s ease";
+        icon.style.animation = collision linear .3s 2 forwards;
     }
         
         map.style.transform =
