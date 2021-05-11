@@ -25,12 +25,12 @@
             --pixel-size: 4px;
         }
     }
-    @media (max-width: 700px) {
+    @media (max-width: 900px) {
         :root {
             --pixel-size: 3px;
         }
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         :root {
             --pixel-size: 2px;
         }
@@ -131,7 +131,7 @@
         border-width: calc(var(--pixel-size)*.1);
     }
     .main {
-        display: visible;
+        display: none;
     }
     .icon {
         position: absolute;
@@ -180,6 +180,92 @@
         border: none;
         background: transparent;
         color: #fff;
+    }
+    .resize {
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*4);
+        position: fixed;
+        color: #fff;
+        z-index: 21;
+        text-align: center;
+        width: 100%;
+        top: calc(var(--grid-cell)*.4);
+        left: 0;
+        opacity: 0%;
+        transition: 1s;
+        overflow: hidden;
+    }
+    @keyframes alarm {
+        0% {
+            color: red;
+        }
+        50% {
+            color: #fff;
+        }
+        100% {
+            color: transparent;
+        }
+    }
+    .reload {
+        opacity: 0%;
+        transition: 1s;
+        color: #42f569;
+    }
+</style>
+    
+<style>
+    .fade {
+        position: fixed;
+        z-index: 30;
+        background: #000;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0%;
+        pointer-events: none;
+    }
+    .vignette {
+        position: fixed;
+        overflow: hidden;
+        z-index: 30;
+        background: radial-gradient(transparent, #000, #000, #000);
+        pointer-events: none;
+        background-position: center;
+        top: 0;
+        left:0;
+        right:0;
+        bottom: 0;
+        overflow: hidden;
+        animation-delay: 1s;
+        opacity: 0%;
+    }
+    @keyframes scale {
+        0% {
+        top: 0;
+        left:0;
+        right:0;
+        bottom: 0;
+        opacity: 100%;
+        }
+        100% {
+        top: -150%;
+        left:-150%;
+        right:-150%;
+        bottom: -150%;
+        opacity: 0%;
+        }
+    }
+    @keyframes fade {
+        0% {
+            opacity: 0%;
+        }
+        50% {
+            opacity: 100%;
+        }
+        100% {
+            opacity: 0%;
+        }
     }
 </style>
     
@@ -281,7 +367,10 @@
    
 <body>
     
-    <button class="start" id="start">New Ruin</button>
+    <div class="fade" id="fade"></div>
+    <div class="vignette" id="vignette"></div>
+    
+    <button class="start" id="start">New</button>
     
     <div class="splash" id="splash">
     <img class="anim" src="lights/lights0.png"/>
@@ -289,7 +378,12 @@
     <img class="anim" src="lights/lights0.png"/ style="right:calc(var(--grid-cell)*12);">
     </div>
     
-    <div class="main">
+    <div class="resize" id="resize">
+        <p>Resizing window proportions</p>
+        <p class="reload" id="reload">Applying changes...</p>
+    </div>
+    
+    <div class="main" id="main">
     
     <div id='swipeme'>
 </div>
@@ -346,13 +440,32 @@
     </div>
 
 </body>
+
+<script>
+    $(window).resize(function() {
+    document.getElementById("resize").style.opacity = "100%";
+    document.getElementById("resize").style.animation = "alarm 2s ease infinite";
+        setTimeout(function() {
+    document.getElementById("reload").style.opacity = "100%";
+        },4000);
+        setTimeout(function() {
+        location.reload();
+        return false;
+        },6000);
+});
+</script> <!--resize-->
     
 <script>
     $('.start').click(function() {
+        document.getElementById("fade").style.animation = "fade 1s forwards";
+        setTimeout(function() {
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
+        document.getElementById("main").style.display = "block";
+        document.getElementById("vignette").style.animation = "scale 3s ease forwards";
+        },500);
     });
-</script>
+</script> <!--start button-->
   
 <script>
 const $element = $('.anim');
@@ -393,7 +506,7 @@ $(document).ready(() => {
 $(window).on('load', () => {
   requestAnimationFrame(step2);
 });
-</script>
+</script> <!--main menu-->
     
 <script>
     
@@ -555,7 +668,7 @@ $(window).on('load', () => {
     },200);
 
     
-</script>
+</script> <!--dpad-->
     
 <script>
     function myright(el,d) {
@@ -602,7 +715,7 @@ $(window).on('load', () => {
         map.style.transition = "transform .2s ease";
         
     }
-</script>
+</script>   
 <script>
     function myleft(el,d) {
             xcord = xcord-1,
@@ -648,7 +761,7 @@ $(window).on('load', () => {
         map.style.transition = "transform .2s ease";
         
     }
-</script>
+</script>    
 <script>
     function myup(el,d) {
             ycord = ycord-1,
@@ -694,7 +807,7 @@ $(window).on('load', () => {
         map.style.transition = "transform .2s ease";
         
     }
-</script>
+</script>  
 <script>
     function mydown(el,d) {
             ycord = ycord+1,
@@ -737,7 +850,7 @@ $(window).on('load', () => {
         map.style.transition = "transform .2s ease";
         
     }
-</script>
+</script> <!--animations-->
 
 <script>
     
@@ -784,9 +897,9 @@ document.querySelector(".dpad-left").addEventListener("mouseover", (e) => handle
 document.querySelector(".dpad-up").addEventListener("mouseover", (e) => handleDpadPress(directions.up));
 document.querySelector(".dpad-right").addEventListener("mouseover", (e) => handleDpadPress(directions.right));
 document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handleDpadPress(directions.down));
-</script>
+</script> <!--dpad commands-->
     
-    <script>
+<script>
 $('body').append('<div style="" id="loading"><div class= "post"></div></div>');
 $(window).on('load', function(){
   setTimeout(removeLoader, 500); //wait for page load PLUS two seconds.
@@ -799,6 +912,6 @@ function removeLoader(){
       $( "#loading" ).remove(); //makes page more lightweight 
   });  
 }
-</script>
+</script> <!--loader-->
     
 </html>
