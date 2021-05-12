@@ -640,39 +640,39 @@ $(window).on('load', () => {
         
         //alert("you swiped on element with id '"+el+"' to "+d+" direction");
         if (d == "d")
-        {document.getElementById("swipeme").style.background = "red",
+        {
             ycord = ycord-1,
             icon.style.backgroundImage = "url('back.png')",
             y=y-160,
             map.style.top =
-        `${-y*pixelSize}px`,
+        `${y*pixelSize}px`,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
         } else if (d == "u")
-        {document.getElementById("swipeme").style.background = "blue",
+        {
             ycord = ycord+1,
             icon.style.backgroundImage = "url('icon.png')",
             map.style.top =
-        `${y*pixelSize}px`,
+        `${-y*pixelSize}px`,
             y=y+160;
         } else if (d == "r")
-        {document.getElementById("swipeme").style.background = "green",
+        {
             xcord = xcord-1,
             icon.style.backgroundImage = "url('left.png')",
             x=x-160,
             map.style.left =
-        `${-x*pixelSize}px`,
+        `${x*pixelSize}px`,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
         } else
-        {document.getElementById("swipeme").style.background = "yellow",
+        {
             xcord = xcord+1,
             icon.style.backgroundImage = "url('right.png')",
             x=x+160,
             map.style.left =
-        `${x*pixelSize}px`,
+        `${-x*pixelSize}px`,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
