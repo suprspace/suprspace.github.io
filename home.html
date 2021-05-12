@@ -94,10 +94,18 @@
         max-width: 100%;
         max-height: 100%;
     }
-    camera {
+    .camera {
+        pointer-events: none;
+        
+    }
+    .shaded {
+        position: fixed;
+        z-index: 10;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        box-shadow: inset 0 0 calc(var(--grid-cell)*10) #000;
         pointer-events: none;
     }
-    
     .lens {
         position: relative;
         width: calc(var(--grid-cell)*10);
@@ -105,25 +113,28 @@
         border: none;
         z-index: 5;
         pointer-events: none;
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
     
     .grid {
-        position: relative;
+        position: absolute;
         z-index: 4;
         display: grid;
         width: calc(var(--grid-cell)*50);
         height: calc(var(--grid-cell)*50);
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         color: transparent;
-        transition: none;
-        background-image: url("level1.png");
-        background-size: 100%;
+        transition: .2s ease;
+        top: 0;
+        left: 0;
+        transform: translate3d(-50%,-50%);
     }
     .square {
+        border: calc(var(--pixel-size)*2) solid #000;
         aspect-ratio: 1;
-        border: solid #000;
-        border-width: calc(var(--pixel-size)*.1);
+        background-image: url("dungeon.png");
+        background-size: 100%;
+        background-position: center;
     }
     .main {
         display: none;
@@ -413,6 +424,11 @@
     <div id='swipeme'>
 </div>
         
+    <div class="shaded">
+        <div class="shaded"></div>
+        <div class="shaded"></div>
+    </div>
+        
  <div class="cords" id="cords">hey</div> 
     
     <div class="lens">
@@ -544,30 +560,6 @@ $(window).on('load', () => {
 <script>
 
     
-    var oncetest = 0;
-    
-    window.setInterval(function() {
-        if (col >= 1) {
-            if (oncetest == 0) {
-            msg.style.bottom = "calc(var(--grid-cell)*1)";
-            msg.style.opacity = "100%";
-            msg.style.width = "calc(var(--grid-cell)*12)";
-            type1.style.animation = "typing steps(25) 1s forwards";
-            type1.innerHTML = "This side appears to be sealed off...";
-                setTimeout(function() {
-            col = 0;
-            type1.innerHTML = "";
-            type1.style.animation = "none";
-                    
-            msg.style.bottom = "calc(var(--grid-cell)*-2)";
-            msg.style.opacity = "0%";
-            msg.style.width = "calc(var(--grid-cell)*10)";
-                oncetest = oncetest + 1;
-                },3000);
-        } else {
-            return;
-        }}
-    },2000);
     
     $('.dpad-right').click(function() {
         myright();
@@ -654,6 +646,8 @@ $(window).on('load', () => {
             ycord = ycord-1,
             icon.style.backgroundImage = "url('back.png')",
             y=y-160,
+            map.style.top =
+        `${-y*pixelSize}px`,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
@@ -661,12 +655,16 @@ $(window).on('load', () => {
         {document.getElementById("swipeme").style.background = "blue",
             ycord = ycord+1,
             icon.style.backgroundImage = "url('icon.png')",
+            map.style.top =
+        `${y*pixelSize}px`,
             y=y+160;
         } else if (d == "r")
         {document.getElementById("swipeme").style.background = "green",
             xcord = xcord-1,
             icon.style.backgroundImage = "url('left.png')",
             x=x-160,
+            map.style.left =
+        `${-x*pixelSize}px`,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
@@ -675,48 +673,17 @@ $(window).on('load', () => {
             xcord = xcord+1,
             icon.style.backgroundImage = "url('right.png')",
             x=x+160,
+            map.style.left =
+        `${x*pixelSize}px`,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
         }
         
         
-    if (xcord <= -1) {
-        xcord = 0,
-        x = 0,
-        dash();
-    }
-    if (xcord >= 5) {
-        xcord = 4,
-        x = 640,
-        dash();
-    }
-    if (ycord <= -1) {
-        ycord = 0,
-        y = 0,
-        dash();
-    }
-    if (ycord >= 5) {
-        ycord = 4,
-        y = 640,
-        dash();
-    }
-    
-    function dash () {
-        col = col+1;
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
-        icon.style.animation = "collision steps(4) .2s 3 forwards";
-        setTimeout(function() {
-            icon.style.animation = "none";
-        },1000);
 
-    }
-    
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
+        
+        map.style.transition = ".2s ease";
         
     }
 
@@ -740,45 +707,13 @@ $(window).on('load', () => {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
         
-    if (xcord <= -1) {
-        xcord = 0,
-        x = 0,
-        dash();
-    }
-    if (xcord >= 5) {
-        xcord = 4,
-        x = 640,
-        dash();
-    }
-    if (ycord <= -1) {
-        ycord = 0,
-        y = 0,
-        dash();
-    }
-    if (ycord >= 5) {
-        ycord = 4,
-        y = 640,
-        dash();
-    }
-    
-    function dash () {
-        col = col+1;
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
-        icon.style.animation = "collision steps(4) .2s 3 forwards";
-        setTimeout(function() {
-            icon.style.animation = "none";
-        },1000);
-    }
        
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
+        map.style.left =
+        `${-x*pixelSize}px`;
+        map.style.transition = ".2s ease";
         
     }
-</script>   
-<script>
+
     function myleft(el,d) {
             xcord = xcord-1,
             icon.style.backgroundImage = "url('left.png')",
@@ -787,45 +722,13 @@ $(window).on('load', () => {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
         
-    if (xcord <= -1) {
-        xcord = 0,
-        x = 0,
-        dash();
-    }
-    if (xcord >= 5) {
-        xcord = 4,
-        x = 640,
-        dash();
-    }
-    if (ycord <= -1) {
-        ycord = 0,
-        y = 0,
-        dash();
-    }
-    if (ycord >= 5) {
-        ycord = 4,
-        y = 640,
-        dash();
-    }
     
-    function dash () {
-        col = col+1;
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
-        icon.style.animation = "collision steps(4) .2s 3 forwards";
-        setTimeout(function() {
-            icon.style.animation = "none";
-        },1000);
-    }
-
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
+        map.style.left =
+        `${-x*pixelSize}px`;
+        map.style.transition = ".2s ease";
         
     }
-</script>    
-<script>
+
     function myup(el,d) {
             ycord = ycord-1,
             icon.style.backgroundImage = "url('back.png')",
@@ -834,85 +737,24 @@ $(window).on('load', () => {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
         
-    if (xcord <= -1) {
-        xcord = 0,
-        x = 0,
-        dash();
-    }
-    if (xcord >= 5) {
-        xcord = 4,
-        x = 640,
-        dash();
-    }
-    if (ycord <= -1) {
-        ycord = 0,
-        y = 0,
-        dash();
-    }
-    if (ycord >= 5) {
-        ycord = 4,
-        y = 640,
-        dash();
-    }
     
-    function dash () {
-        col = col + 1;
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
-        icon.style.animation = "collision steps(4) .2s 3 forwards";
-        setTimeout(function() {
-            icon.style.animation = "none";
-        },1000);
-    }
        
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
+        map.style.top =
+        `${-y*pixelSize}px`;
+
+        map.style.transition = ".2s ease";
         
     }
-</script>  
-<script>
+
     function mydown(el,d) {
             ycord = ycord+1,
             icon.style.backgroundImage = "url('icon.png')",
             y=y+160;
         
-    if (xcord <= -1) {
-        xcord = 0,
-        x = 0,
-        dash();
-    }
-    if (xcord >= 5) {
-        xcord = 4,
-        x = 640,
-        dash();
-    }
-    if (ycord <= -1) {
-        ycord = 0,
-        y = 0,
-        dash();
-    }
-    if (ycord >= 5) {
-        ycord = 4,
-        y = 640,
-        dash();
-    }
-    
-    function dash () {
-        col = col + 1;
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
-        icon.style.animation = "collision steps(4) .2s 3 forwards";
-        setTimeout(function() {
-            icon.style.animation = "none";
-        },1000);
-    }
        
-        map.style.transform =
-        `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
-        map.style.transition = "transform .2s ease";
+        map.style.top =
+        `${-y*pixelSize}px`;
+        map.style.transition = ".2s ease";
         
     }
 </script> <!--animations-->
